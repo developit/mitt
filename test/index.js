@@ -52,6 +52,13 @@ describe('mitt', () => {
 				expect(events).to.have.property('bar').that.deep.equals([foo]);
 				expect(events).to.have.property('baz:bat!').that.deep.equals([foo]);
 			});
+
+			it('should return unsubscribe function', () => {
+				let foo = () => {};
+				let off = inst.on('foo', foo);
+
+				expect(off).to.be.a('function');
+			});
 		});
 
 		describe('off()', () => {
@@ -93,6 +100,17 @@ describe('mitt', () => {
 				expect(events).to.have.property('foo').that.is.empty;
 				expect(events).to.have.property('bar').that.is.empty;
 				expect(events).to.have.property('baz:bat!').that.is.empty;
+			});
+
+			it('should remove handler if unsubscribe is called', () => {
+				let foo = () => {};
+				let off = inst.on('foo', foo);
+
+				expect(events).to.have.property('foo').that.deep.equals([foo]);
+				
+				off();
+
+				expect(events).to.have.property('foo').that.is.empty;
 			});
 		});
 

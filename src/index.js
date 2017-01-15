@@ -21,6 +21,7 @@ export default function mitt(all) {
 		 */
 		on(type, handler) {
 			list(type).push(handler);
+			return ()=>this.off(type, handler)
 		},
 
 		/** Remove an event handler for the given type.
