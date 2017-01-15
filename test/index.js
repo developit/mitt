@@ -136,9 +136,12 @@ describe('mitt', () => {
 				inst.emit('foo', event);
 				inst.emit('bar', event);
 
-				expect(star)
-					.to.have.been.calledTwice
-					.and.always.calledWithExactly(event);
+        let args1 = star.args[0],
+					args2 = star.args[1];
+
+				expect(star).to.have.been.calledTwice;
+				expect(args1).to.deep.equal(['foo', event]);
+				expect(args2).to.deep.equal(['bar', event]);
 			});
 		});
 	});
