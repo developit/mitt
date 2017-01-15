@@ -52,3 +52,22 @@ If present, `"*"` handlers are invoked prior to type-matched handlers.
 
 -   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The event type to invoke
 -   `event` **\[Any]** An event object, passed to each handler
+
+* * *
+
+## Sample usage
+
+```es6
+import mitt from 'mitt'
+
+let emitter = mitt()
+
+// listen to an event
+emitter.on('foo', e => console.log('foo', e) )
+
+// listen to all events
+emitter.on('*', (type, e) => console.log(type, e) )
+
+// fire an event
+emitter.emit('foo', { a: 'b' })
+```
