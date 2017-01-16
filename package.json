@@ -64,7 +64,7 @@
     "mkdirp": "^0.5.1",
     "mocha": "^3.2.0",
     "npm-run-all": "^2.1.1",
-    "pretty-bytes": "^4.0.2",
+    "pretty-bytes-cli": "^2.0.0",
     "rimraf": "^2.5.2",
     "rollup": "^0.41.4",
     "rollup-plugin-buble": "^0.15.0",
