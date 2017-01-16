@@ -1,18 +1,46 @@
-# `mitt`
+<p align="center">
+  <img src="https://i.imgur.com/BqsX9NT.png" width="256" height="256" alt="mitt">
+  <br>
+  <b>Mitt</b>: tiny 200b functional event emitter / pubsub.
+  <br>
+  <a href="https://www.npmjs.org/package/mitt"><img src="https://img.shields.io/npm/v/mitt.svg?style=flat" alt="npm"></a> <a href="https://travis-ci.org/developit/mitt"><img src="https://travis-ci.org/developit/mitt.svg?branch=master" alt="travis"></a>
+</p>
 
-[![NPM](https://img.shields.io/npm/v/mitt.svg?style=flat)](https://www.npmjs.org/package/mitt)
-[![travis-ci](https://travis-ci.org/developit/mitt.svg?branch=master)](https://travis-ci.org/developit/mitt)
 
-**Tiny (~200b) functional event emitter / pubsub.**
+## Why Mitt?
 
-**It's tiny:** no dependencies and only **190 bytes** when gzipped _(250b without)_.
+- **Microscopic:** weighs less than 200 bytes gzipped
+- **Useful:** a wildcard `"*"` event type listens to all events
+- **Famliar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+- **Functional:** methods don't rely on `this`
+- **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
+
 
 * * *
 
-## Installation
 
-```sh
-npm install --save mitt
+## Usage
+
+After installing via `npm install --save mitt`:
+
+```js
+import mitt from 'mitt'
+
+let emitter = mitt()
+
+// listen to an event
+emitter.on('foo', e => console.log('foo', e) )
+
+// listen to all events
+emitter.on('*', (type, e) => console.log(type, e) )
+
+// fire an event
+emitter.emit('foo', { a: 'b' })
+
+// working with handler references:
+function onFoo() {}
+emitter.on('foo', onFoo)   // listen
+emitter.off('foo', onFoo)  // unlisten
 ```
 
 * * *
@@ -52,22 +80,3 @@ If present, `"*"` handlers are invoked prior to type-matched handlers.
 
 -   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The event type to invoke
 -   `event` **\[Any]** An event object, passed to each handler
-
-* * *
-
-## Sample usage
-
-```es6
-import mitt from 'mitt'
-
-let emitter = mitt()
-
-// listen to an event
-emitter.on('foo', e => console.log('foo', e) )
-
-// listen to all events
-emitter.on('*', (type, e) => console.log(type, e) )
-
-// fire an event
-emitter.emit('foo', { a: 'b' })
-```
