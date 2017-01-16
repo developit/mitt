@@ -15,6 +15,8 @@
 - **Functional:** methods don't rely on `this`
 - **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
 
+> Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and only uses basic language features. It probably works in Internet Explorer 5.
+
 
 * * *
 
