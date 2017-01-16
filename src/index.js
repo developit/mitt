@@ -4,7 +4,7 @@
  */
 export default function mitt(all) {
 	// Arrays of event handlers, keyed by type
-	all = all || {};
+	all = all || Object.create(null);
 
 	// Get or create a named handler list
 	function list(type) {

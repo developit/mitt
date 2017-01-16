@@ -14,7 +14,7 @@ describe('mitt', () => {
 		let events, inst;
 
 		beforeEach( () => {
-			events = {};
+			events = Object.create(null);
 			inst = mitt(events);
 		});
 
@@ -31,6 +31,13 @@ describe('mitt', () => {
 
 				expect(events).to.have.property('foo').that.deep.equals([foo]);
 			});
+
+			it('should register handlers for any type strings', () => {
+				let foo = () => {};
+				inst.on('constructor', foo);
+
+				expect(events).to.have.property('constructor').that.deep.equals([foo]);
+      });
 
 			it('should append handler for existing type', () => {
 				let foo = () => {};
