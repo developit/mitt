@@ -13,7 +13,7 @@ describe('mitt#', () => {
 
 	beforeEach( () => {
 		inst = mitt();
-    events = inst.all;
+		events = inst.all;
 	});
 
 	describe('on()', () => {
@@ -35,7 +35,7 @@ describe('mitt#', () => {
 			inst.on('constructor', foo);
 
 			expect(events).to.have.property('constructor').that.deep.equals(new Set([foo]));
-    });
+		});
 
 		it('should append handler for existing type', () => {
 			let foo = () => {};
@@ -97,24 +97,24 @@ describe('mitt#', () => {
 		});
 
 		it('should invoke handler for type', () => {
-      let event = { a: 'b' };
+			let event = { a: 'b' };
 
 			inst.on('foo', (one, two) => {
-        expect(one).to.deep.equal(event);
-        expect(two).to.be.an('undefined');
-      });
+				expect(one).to.deep.equal(event);
+				expect(two).to.be.an('undefined');
+			});
 
 			inst.emit('foo', event);
 		});
 
-    it('should invoke handler with multiple arguments', () => {
-      inst.on('foo', (aaa, bbb, ccc) => {
-        expect(aaa).to.be.equal(111);
-        expect(bbb).to.be.equal(222);
-        expect(ccc).to.be.equal(333);
-      });
-      inst.emit('foo', 111, 222, 333);
-    });
+		it('should invoke handler with multiple arguments', () => {
+			inst.on('foo', (aaa, bbb, ccc) => {
+				expect(aaa).to.be.equal(111);
+				expect(bbb).to.be.equal(222);
+				expect(ccc).to.be.equal(333);
+			});
+			inst.emit('foo', 111, 222, 333);
+		});
 
 		it('should ignore case', () => {
 			let foo = spy(),
@@ -124,10 +124,10 @@ describe('mitt#', () => {
 			inst.emit('FOO', num);
 			inst.emit('Foo', num);
 
-      let args = foo.args[0];
+			let args = foo.args[0];
 
 			expect(foo).to.have.been.calledTwice;
-      expect(args).to.be.deep.equal([num, undefined, undefined]);
+			expect(args).to.be.deep.equal([num, undefined, undefined]);
 		});
 
 		it('should invoke * handlers', () => {
@@ -138,7 +138,7 @@ describe('mitt#', () => {
 			inst.emit('foo', aa);
 			inst.emit('bar', aa);
 
-      let args1 = star.args[0],
+			let args1 = star.args[0],
 				args2 = star.args[1];
 
 			expect(star).to.have.been.calledTwice;
