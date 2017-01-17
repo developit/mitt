@@ -6,7 +6,6 @@
   <a href="https://www.npmjs.org/package/mitt"><img src="https://img.shields.io/npm/v/mitt.svg?style=flat" alt="npm"></a> <a href="https://travis-ci.org/developit/mitt"><img src="https://travis-ci.org/developit/mitt.svg?branch=master" alt="travis"></a>
 </p>
 
-
 ## Why Mitt?
 
 - **Microscopic:** weighs less than 200 bytes gzipped
@@ -15,11 +14,14 @@
 - **Functional:** methods don't rely on `this`
 - **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
 
-> Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and only uses basic language features. It probably works in Internet Explorer 5.
+> Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
 
+
+## Examples & Demos
+
+[Preact + Mitt Codepen Demo](http://codepen.io/developit/pen/rjMEwW?editors=0110)
 
 * * *
-
 
 ## Usage
 
