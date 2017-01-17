@@ -8,14 +8,13 @@
 
 ## Why Mitt?
 
-- **Microscopic:** weighs less than 200 bytes gzipped
-- **Useful:** a wildcard `"*"` event type listens to all events
-- **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
-- **Functional:** methods don't rely on `this`
-- **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
+-   **Microscopic:** weighs less than 200 bytes gzipped
+-   **Useful:** a wildcard `"*"` event type listens to all events
+-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+-   **Functional:** methods don't rely on `this`
+-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
 
 > Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
-
 
 ## Examples & Demos
 
@@ -59,7 +58,7 @@ emitter.off('foo', onFoo)  // unlisten
 
 Mitt: Tiny (~200b) functional event emitter / pubsub.
 
-Returns **Mitt**
+Returns **Mitt** 
 
 #### emit
 
