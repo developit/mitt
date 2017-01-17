@@ -1,2 +1,0 @@
-!function(n,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):n.mitt=e()}(this,function(){function n(){var n={all:Object.create(null),on:function(t,o){return e(t).add(o),n},off:function(t,o){return e(t).delete(o),n},emit:function(t,o,r,u){return e(t).forEach(function(n){return n(o,r,u)}),e("*").forEach(function(n){return n(t,o,r,u)}),n}},e=function(e){return n.all[e=e.toLowerCase()]||(n.all[e]=new Set)};return n}return n});
-//# sourceMappingURL=mitt.umd.js.map

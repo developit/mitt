@@ -1,2 +1,0 @@
-function n(){var n={all:Object.create(null),on:function(e,r){return t(e).add(r),n},off:function(e,r){return t(e).delete(r),n},emit:function(e,r,u,o){return t(e).forEach(function(n){return n(r,u,o)}),t("*").forEach(function(n){return n(e,r,u,o)}),n}},t=function(t){return n.all[t=t.toLowerCase()]||(n.all[t]=new Set)};return n}module.exports=n;
-//# sourceMappingURL=mitt.js.map
