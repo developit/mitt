@@ -4,12 +4,6 @@
  */
 function mitt() {
 	// Arrays of event handlers, keyed by type
-
-	// Get or create a named handler list
-	function list(type) {
-		let t = type.toLowerCase();
-		return all[t] || (all[t] = []);
-	}
 	let all = {};
 
 	return {
@@ -20,7 +14,7 @@ function mitt() {
 		 *	@memberof mitt
 		 */
 		on(type, handler) {
-			list(type).push(handler);
+			(all[type = type.toLowerCase()] || (all[type] = [])).push(handler);
 		},
 
 		/** Remove an event handler for the given type.
@@ -29,9 +23,8 @@ function mitt() {
 		 *	@memberof mitt
 		 */
 		off(type, handler) {
-			let e = list(type),
-				i = e.indexOf(handler);
-			if (~i) e.splice(i, 1);
+			let e = all[type = type.toLowerCase()] || (all[type] = []);
+			e.splice(e.indexOf(handler)>>>0, 1);
 		},
 
 		/** Invoke all handlers for the given type.
@@ -41,7 +34,8 @@ function mitt() {
 		 *	@memberof mitt
 		 */
 		emit(type, event) {
-			list('*').concat(list(type)).forEach( f => { f(event); });
+			(all[type = type.toLowerCase()] || []).map( f => { f(event); });
+			(all['*'] || []).map( f => { f(type, event); });
 		}
 	};
 }
