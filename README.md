@@ -62,7 +62,6 @@ If present, `"*"` handlers are invoked prior to type-matched handlers.
 -   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The event type to invoke
 -   `arg1` **\[Any]** A value (first argument), passed to each handler
 -   `arg2` **\[Any]** A value (second argument), passed to each handler
--   `arg3` **\[Any]** A value (third argument), passed to each handler
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the `mitt` instance for chaining
 

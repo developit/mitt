@@ -3,8 +3,9 @@
  *  @returns {Mitt}
  */
 export default function mitt () {
+	let all = Object.create(null)
 	let ret = {
-		all: Object.create(null),
+		all,
 
 		/**
 		 * Register an event handler for the given type.
@@ -15,7 +16,7 @@ export default function mitt () {
 		 * @memberOf mitt
 		 */
 		on(type, handler) {
-			list(type).add(handler);
+			(all[type] || (all[type] = [])).push(handler);
 			return ret;
 		},
 
@@ -28,7 +29,8 @@ export default function mitt () {
 		 * @memberOf mitt
 		 */
 		off(type, handler) {
-			list(type).delete(handler);
+			let e = all[type] || (all[type] = []);
+			e.splice(e.indexOf(handler) >>> 0, 1);
 			return ret;
 		},
 
@@ -39,21 +41,14 @@ export default function mitt () {
 		 * @param {String} type  The event type to invoke
 		 * @param {Any} [arg1]  A value (first argument), passed to each handler
 		 * @param {Any} [arg2]  A value (second argument), passed to each handler
-		 * @param {Any} [arg3]  A value (third argument), passed to each handler
 		 * @return {Object} the `mitt` instance for chaining
 		 * @memberof mitt
 		 */
-		emit(type, arg1, arg2, arg3) {
-			list(type).forEach((handler) => handler(arg1, arg2, arg3));
-			list('*').forEach((handler) => handler(type, arg1, arg2, arg3));
+		emit(type, arg1, arg2) {
+			(all[type] || []).map((handler) => { handler(arg1, arg2); });
+			(all['*'] || []).map((handler) => { handler(type, arg1, arg2); });
 			return ret;
 		}
 	};
-
-	// Get or create a named handler list
-	let list = (type) => {
-		return ret.all[type = type.toLowerCase()] || (ret.all[type] = new Set());
-	};
-
 	return ret;
 }
