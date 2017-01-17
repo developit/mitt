@@ -1,47 +1,59 @@
 /** Mitt: Tiny (~200b) functional event emitter / pubsub.
- *	@name mitt
- *	@returns {Mitt}
+ *  @name mitt
+ *  @returns {Mitt}
  */
-export default function mitt(all) {
-	// Arrays of event handlers, keyed by type
-	all = all || {};
+export default function mitt () {
+  let ret = {
+    all: Object.create(null),
 
-	// Get or create a named handler list
-	function list(type) {
-		let t = type.toLowerCase();
-		return all[t] || (all[t] = []);
-	}
+    /**
+     * Register an event handler for the given type.
+     *
+     * @param  {String} type    Type of event to listen for, or `"*"` for all events
+     * @param  {Function} handler Function to call in response to given event
+     * @return {Object} the `mitt` instance for chaining
+     * @memberOf mitt
+     */
+    on(type, handler) {
+      list(type).add(handler);
+      return ret;
+    },
 
-	return {
+    /**
+     * Remove an event handler for the given type.
+     *
+     * @param  {String} type    Type of event to unregister `handler` from, or `"*"`
+     * @param  {Function} handler Handler function to remove
+     * @return {Object} the `mitt` instance for chaining
+     * @memberOf mitt
+     */
+    off(type, handler) {
+      list(type).delete(handler);
+      return ret;
+    },
 
-		/** Register an event handler for the given type.
-		 *	@param {String} type		Type of event to listen for, or `"*"` for all events
-		 *	@param {Function} handler	Function to call in response to the given event
-		 *	@memberof mitt
-		 */
-		on(type, handler) {
-			list(type).push(handler);
-		},
+    /**
+     * Invoke all handlers for the given type.
+     * If present, `"*"` handlers are invoked prior to type-matched handlers.
+     *
+     * @param {String} type  The event type to invoke
+     * @param {Any} [arg1]  A value (first argument), passed to each handler
+     * @param {Any} [arg2]  A value (second argument), passed to each handler
+     * @param {Any} [arg3]  A value (third argument), passed to each handler
+     * @return {Object} the `mitt` instance for chaining
+     * @memberof mitt
+     */
+    emit(type, arg1, arg2, arg3) {
+      list(type).forEach((handler) => handler(arg1, arg2, arg3));
+      list('*').forEach((handler) => handler(type, arg1, arg2, arg3));
+      return ret;
+    }
+  };
 
-		/** Remove an event handler for the given type.
-		 *	@param {String} type		Type of event to unregister `handler` from, or `"*"`
-		 *	@param {Function} handler	Handler function to remove
-		 *	@memberof mitt
-		 */
-		off(type, handler) {
-			let e = list(type),
-				i = e.indexOf(handler);
-			if (~i) e.splice(i, 1);
-		},
+  // Get or create a named handler list
+  let list = (type) => {
+    return ret.all[type = type.toLowerCase()] || (ret.all[type] = new Set());
+  };
 
-		/** Invoke all handlers for the given type.
-		 *	If present, `"*"` handlers are invoked prior to type-matched handlers.
-		 *	@param {String} type	The event type to invoke
-		 *	@param {Any} [event]	An event object, passed to each handler
-		 *	@memberof mitt
-		 */
-		emit(type, event) {
-			list('*').concat(list(type)).forEach( f => { f(event); });
-		}
-	};
+  return ret;
 }
