@@ -19,7 +19,11 @@
 
 ## Examples & Demos
 
-[Preact + Mitt Codepen Demo](http://codepen.io/developit/pen/rjMEwW?editors=0110)
+<a href="http://codepen.io/developit/pen/rjMEwW?editors=0110">
+  <b>Preact + Mitt Codepen Demo</b>
+  <br>
+  <img src="https://i.imgur.com/CjBgOfJ.png" width="278" alt="preact + mitt preview">
+</a>
 
 * * *
 
