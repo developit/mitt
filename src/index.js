@@ -2,15 +2,15 @@
  *	@name mitt
  *	@returns {Mitt}
  */
-export default function mitt(all) {
+function mitt() {
 	// Arrays of event handlers, keyed by type
-	all = all || {};
 
 	// Get or create a named handler list
 	function list(type) {
 		let t = type.toLowerCase();
 		return all[t] || (all[t] = []);
 	}
+	let all = {};
 
 	return {
 
@@ -45,3 +45,4 @@ export default function mitt(all) {
 		}
 	};
 }
+try { module.exports = mitt; }catch(e){}
