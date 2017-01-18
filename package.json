@@ -7,7 +7,7 @@
   "main": "dist/mitt.js",
   "umd:main": "dist/mitt.umd.js",
   "scripts": {
-    "test": "eslint src test && mocha --compilers js:babel-register test/**/*.js",
+    "test": "flow && eslint src test && mocha --compilers js:babel-register test/**/*.js",
     "build": "npm-run-all clean -p rollup:* -p minify:* -s docs size",
     "clean": "rimraf dist && mkdirp dist",
     "rollup:cjs": "rollup -c rollup.config.js -m -f cjs -n $npm_package_amdName $npm_package_jsnext_main -o $npm_package_main",
