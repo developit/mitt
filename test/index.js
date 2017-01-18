@@ -111,14 +111,6 @@ describe('mitt#', () => {
 			inst.emit('foo', event);
 		});
 
-		it('should invoke handler with multiple (max 2) arguments', () => {
-			inst.on('foo', (aaa, bbb) => {
-				expect(aaa).to.be.equal(111);
-				expect(bbb).to.be.equal(222);
-			});
-			inst.emit('foo', 111, 222);
-		});
-
 		it('should NOT ignore case', () => {
 			let foo = spy(),
 				bar = spy(),
@@ -134,8 +126,8 @@ describe('mitt#', () => {
 
 			expect(foo).to.have.been.calledOnce;
 			expect(bar).to.have.been.calledOnce;
-			expect(args1).to.be.deep.equal([num, undefined]);
-			expect(args2).to.be.deep.equal([num, undefined]);
+			expect(args1).to.be.deep.equal([num]);
+			expect(args2).to.be.deep.equal([num]);
 		});
 
 		it('should invoke * handlers', () => {
@@ -150,8 +142,8 @@ describe('mitt#', () => {
 				args2 = star.args[1];
 
 			expect(star).to.have.been.calledTwice;
-			expect(args1).to.deep.equal(['foo', aa, undefined]);
-			expect(args2).to.deep.equal(['bar', aa, undefined]);
+			expect(args1).to.deep.equal(['foo', aa]);
+			expect(args2).to.deep.equal(['bar', aa]);
 		});
 	});
 });

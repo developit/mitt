@@ -39,14 +39,13 @@ export default function mitt () {
 		 * If present, `"*"` handlers are invoked prior to type-matched handlers.
 		 *
 		 * @param {String} type  The event type to invoke
-		 * @param {Any} [arg1]  A value (first argument), passed to each handler
-		 * @param {Any} [arg2]  A value (second argument), passed to each handler
+		 * @param {Any} [evt]  Any value (object is recommended and powerful), passed to each handler
 		 * @return {Object} the `mitt` instance for chaining
 		 * @memberof mitt
 		 */
-		emit(type, arg1, arg2) {
-			(all[type] || []).map((handler) => { handler(arg1, arg2); });
-			(all['*'] || []).map((handler) => { handler(type, arg1, arg2); });
+		emit(type, evt) {
+			(all[type] || []).map((handler) => { handler(evt); });
+			(all['*'] || []).map((handler) => { handler(type, evt); });
 			return ret;
 		}
 	};
