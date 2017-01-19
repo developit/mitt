@@ -5,7 +5,7 @@ declare module "mitt" {
 }
 
 declare namespace mitt {
-	type Handler = (...event: any[]) => void;
+	type Handler = (event?: any) => void;
 
 	interface MittStatic {
 		new(all?: {[key: string]: Handler}): Emitter;
