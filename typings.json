@@ -1,0 +1,5 @@
+{
+  "name": "mitt",
+  "main": "src/index.d.ts",
+  "version": false
+}

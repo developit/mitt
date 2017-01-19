@@ -8,8 +8,9 @@
   "umd:main": "dist/mitt.umd.js",
   "scripts": {
     "test": "eslint src test && mocha --compilers js:babel-register test/**/*.js",
-    "build": "npm-run-all clean -p rollup:* -p minify:* -s docs size",
+    "build": "npm-run-all clean -p rollup:* -p minify:* -s copy-typescript-definition docs size",
     "clean": "rimraf dist && mkdirp dist",
+    "copy-typescript-definition": "copyfiles -f src/index.d.ts dist",
     "rollup:cjs": "rollup -c rollup.config.js -m -f cjs -n $npm_package_amdName $npm_package_jsnext_main -o $npm_package_main",
     "rollup:umd": "rollup -c rollup.config.js -m -f umd -n $npm_package_amdName $npm_package_jsnext_main -o $npm_package_umd_main",
     "minify:cjs": "uglifyjs $npm_package_main -cm toplevel -o $npm_package_main -p relative --in-source-map ${npm_package_main}.map --source-map ${npm_package_main}.map",
@@ -51,6 +52,7 @@
       "expect": true
     }
   },
+  "typings": "./dist/index.d.ts",
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-eslint": "^7.1.1",
@@ -58,6 +60,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
+    "copyfiles": "^1.0.0",
     "documentation": "^4.0.0-beta4",
     "eslint": "^3.13.1",
     "gzip-size-cli": "^1.0.0",
