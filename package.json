@@ -1,7 +1,7 @@
 {
   "name": "mitt",
   "amdName": "mitt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tiny ~200b functional event emitter / pubsub.",
   "jsnext:main": "src/index.js",
   "main": "dist/mitt.js",
@@ -33,12 +33,6 @@
     "src",
     "dist"
   ],
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0"
-    ]
-  },
   "eslintConfig": {
     "parser": "babel-eslint",
     "extends": "eslint:recommended",
