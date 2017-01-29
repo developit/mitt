@@ -1,11 +1,9 @@
 /** Mitt: Tiny (~200b) functional event emitter / pubsub.
- *	@name mitt
+ *	@param {Any} all	arrays of event handlers, keyed by type
+ *      @name mitt
  *	@returns {Mitt}
  */
-export default function mitt(all) {
-	// Arrays of event handlers, keyed by type
-	all = all || {};
-
+export default function mitt(all = {}) {
 	// Get or create a named handler list
 	function list(type) {
 		let t = type.toLowerCase();
