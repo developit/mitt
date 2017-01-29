@@ -41,7 +41,8 @@ export default function mitt(all) {
 		 *	@memberof mitt
 		 */
 		emit(type, event) {
-			list('*').concat(list(type)).forEach( f => { f(event); });
+      list('*').forEach(f => f(type, event));
+      list(type).forEach(f => f(event));
 		}
 	};
 }
