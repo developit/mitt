@@ -41,7 +41,7 @@ export default function mitt(all) {
 		 *	@memberof mitt
 		 */
 		emit(type, event) {
-			list('*').concat(list(type)).forEach( f => { f(event); });
+			list('*').concat(list(type)).forEach( f => { setTimeout(f, 0, event); });
 		}
 	};
 }
