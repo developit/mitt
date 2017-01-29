@@ -9,7 +9,7 @@ export default function mitt(all) {
 	// Get or create a named handler list
 	function list(type) {
 		let t = type.toLowerCase();
-		return all[t] || (all[t] = []);
+		return all[t] || (all[t] = new Set());
 	}
 
 	return {
@@ -20,7 +20,7 @@ export default function mitt(all) {
 		 *	@memberof mitt
 		 */
 		on(type, handler) {
-			list(type).push(handler);
+			list(type).add(handler);
 		},
 
 		/** Remove an event handler for the given type.
@@ -29,9 +29,7 @@ export default function mitt(all) {
 		 *	@memberof mitt
 		 */
 		off(type, handler) {
-			let e = list(type),
-				i = e.indexOf(handler);
-			if (~i) e.splice(i, 1);
+			list(type).delete(handler);
 		},
 
 		/** Invoke all handlers for the given type.
@@ -41,7 +39,7 @@ export default function mitt(all) {
 		 *	@memberof mitt
 		 */
 		emit(type, event) {
-			list('*').concat(list(type)).forEach( f => { f(event); });
+			new Set([...list('*'), ...list(type)]).forEach( f => { f(event); });
 		}
 	};
 }

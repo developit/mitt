@@ -29,17 +29,16 @@ describe('mitt', () => {
 				let foo = () => {};
 				inst.on('foo', foo);
 
-				expect(events).to.have.property('foo').that.deep.equals([foo]);
+				expect(events).to.have.property('foo').that.deep.equals(new Set([foo]));
 			});
 
 			it('should append handler for existing type', () => {
 				let foo = () => {};
 				let bar = () => {};
 				inst.on('foo', foo);
-				inst.on('foo', foo);
 				inst.on('foo', bar);
 
-				expect(events).to.have.property('foo').that.deep.equals([foo, foo, bar]);
+				expect(events).to.have.property('foo').that.deep.equals(new Set([foo, foo, bar]));
 			});
 
 			it('should normalize case', () => {
@@ -48,9 +47,9 @@ describe('mitt', () => {
 				inst.on('Bar', foo);
 				inst.on('baz:baT!', foo);
 
-				expect(events).to.have.property('foo').that.deep.equals([foo]);
-				expect(events).to.have.property('bar').that.deep.equals([foo]);
-				expect(events).to.have.property('baz:bat!').that.deep.equals([foo]);
+				expect(events).to.have.property('foo').that.deep.equals(new Set([foo]));
+				expect(events).to.have.property('bar').that.deep.equals(new Set([foo]));
+				expect(events).to.have.property('baz:bat!').that.deep.equals(new Set([foo]));
 			});
 		});
 
@@ -63,28 +62,17 @@ describe('mitt', () => {
 
 			it('should remove handler for type', () => {
 				let foo = () => {};
-				events.foo = [foo];
+				inst.on('foo', foo);
 				inst.off('foo', foo);
 
-				expect(events).to.have.property('foo').that.is.empty;
-			});
-
-			it('should remove only one handler for dupes', () => {
-				let foo = () => {};
-				events.foo = [foo, foo];
-
-				inst.off('foo', foo);
-				expect(events).to.have.property('foo').that.deep.equals([foo]);
-
-				inst.off('foo', foo);
 				expect(events).to.have.property('foo').that.is.empty;
 			});
 
 			it('should normalize case', () => {
 				let foo = () => {};
-				events.foo = [foo];
-				events.bar = [foo];
-				events['baz:bat!'] = [foo];
+				inst.on('foo', foo);
+				inst.on('bar', foo);
+				inst.on('baz:bat!', foo);
 
 				inst.off('FOO', foo);
 				inst.off('Bar', foo);
