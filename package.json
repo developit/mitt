@@ -2,7 +2,7 @@
   "name": "mitt",
   "amdName": "mitt",
   "version": "1.0.1",
-  "description": "Tiny ~200b functional event emitter / pubsub.",
+  "description": "Tiny 200b functional Event Emitter / pubsub.",
   "jsnext:main": "src/index.js",
   "main": "dist/mitt.js",
   "umd:main": "dist/mitt.umd.js",

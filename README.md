@@ -17,12 +17,13 @@
 Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
 
 ## Table of Contents
-- [Install](#install)
-- [Usage](#usage)
-- [Examples & Demos](#examples--demos)
-- [API](#api)
-- [Contribute](#contribute)
-- [License](#license)
+
+-   [Install](#install)
+-   [Usage](#usage)
+-   [Examples & Demos](#examples--demos)
+-   [API](#api)
+-   [Contribute](#contribute)
+-   [License](#license)
 
 ## Install
 
@@ -47,6 +48,7 @@ The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https
 ```html
 <script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
 ```
+
 You can find the library on `window.mitt`.
 
 ## Usage
@@ -93,7 +95,7 @@ let emitter: mitt.Emitter = new mitt();
 
 Mitt: Tiny (~200b) functional event emitter / pubsub.
 
-Returns **Mitt**
+Returns **Mitt** 
 
 #### emit
 
@@ -130,27 +132,29 @@ Remove an event handler for the given type.
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the `mitt` instance for chaining
 
 ## Contribute
+
 First off, thanks for taking the time to contribute!
 Now, take a moment to be sure your contributions make sense to everyone else.
 
 ### Reporting Issues
+
 Found a problem? Want a new feature? First of all see if your issue or idea has [already been reported](../../issues).
 If don't, just open a [new clear and descriptive issue](../../issues/new).
 
 ### Submitting pull requests
+
 Pull requests are the greatest contributions, so be sure they are focused in scope, and do avoid unrelated commits.
 
-- Fork it!
-- Clone your fork: `git clone https://github.com/<your-username>/mitt`
-- Navigate to the newly cloned directory: `cd mitt`
-- Create a new branch for the new feature: `git checkout -b my-new-feature`
-- Install the tools necessary for development: `npm install`
-- Make your changes.
-- Commit your changes: `git commit -am 'Add some feature'`
-- Push to the branch: `git push origin my-new-feature`
-- Submit a pull request with full remarks documenting your changes.
+-   Fork it!
+-   Clone your fork: `git clone https://github.com/<your-username>/mitt`
+-   Navigate to the newly cloned directory: `cd mitt`
+-   Create a new branch for the new feature: `git checkout -b my-new-feature`
+-   Install the tools necessary for development: `npm install`
+-   Make your changes.
+-   Commit your changes: `git commit -am 'Add some feature'`
+-   Push to the branch: `git push origin my-new-feature`
+-   Submit a pull request with full remarks documenting your changes.
 
 ## License
 
-[MIT License](LICENSE.md) &copy; [Jason Miller](https://jasonformat.com/)
-
+[MIT License](LICENSE.md) © [Jason Miller](https://jasonformat.com/)
