@@ -43,6 +43,9 @@
     },
     "globals": {
       "expect": true
+    },
+    "rules": {
+      "semi": [2, "always"]
     }
   },
   "devDependencies": {
