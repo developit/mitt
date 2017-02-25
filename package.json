@@ -1,7 +1,7 @@
 {
   "name": "mitt",
   "amdName": "mitt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tiny ~200b functional event emitter / pubsub.",
   "jsnext:main": "src/index.js",
   "main": "dist/mitt.js",
@@ -24,7 +24,7 @@
     "eventemitter",
     "pubsub"
   ],
-  "homepage": "httsp://github.com/developit/mitt",
+  "homepage": "https://github.com/developit/mitt",
   "authors": [
     "Jason Miller <jason@developit.ca>"
   ],
@@ -33,12 +33,6 @@
     "src",
     "dist"
   ],
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0"
-    ]
-  },
   "eslintConfig": {
     "parser": "babel-eslint",
     "extends": "eslint:recommended",
