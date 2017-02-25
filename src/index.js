@@ -16,7 +16,6 @@ export default function mitt(all) {
 		 */
 		on(type, handler) {
 			(all[type] || (all[type] = [])).push(handler);
-			return ret;
 		},
 
 		/**
@@ -30,7 +29,6 @@ export default function mitt(all) {
 		off(type, handler) {
 			let e = all[type] || (all[type] = []);
 			e.splice(e.indexOf(handler) >>> 0, 1);
-			return ret;
 		},
 
 		/**
@@ -45,7 +43,6 @@ export default function mitt(all) {
 		emit(type, evt) {
 			(all[type] || []).map((handler) => { handler(evt); });
 			(all['*'] || []).map((handler) => { handler(type, evt); });
-			return ret;
 		}
 	};
 }
