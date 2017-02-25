@@ -2,11 +2,10 @@
  *  @name mitt
  *  @returns {Mitt}
  */
-export default function mitt () {
-	let all = Object.create(null)
-	let ret = {
-		all,
+export default function mitt(all) {
+	all = all || Object.create(null);
 
+	return {
 		/**
 		 * Register an event handler for the given type.
 		 *
@@ -49,5 +48,4 @@ export default function mitt () {
 			return ret;
 		}
 	};
-	return ret;
 }
