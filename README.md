@@ -71,6 +71,12 @@ emitter.on('foo', onFoo)   // listen
 emitter.off('foo', onFoo)  // unlisten
 ```
 
+### Typescript
+```ts
+import * as mitt from 'mitt';
+let emitter: mitt.Emitter = new mitt();
+```
+
 ## Examples & Demos
 
 <a href="http://codepen.io/developit/pen/rjMEwW?editors=0110">
@@ -78,6 +84,8 @@ emitter.off('foo', onFoo)  // unlisten
   <br>
   <img src="https://i.imgur.com/CjBgOfJ.png" width="278" alt="preact + mitt preview">
 </a>
+
+* * *
 
 ## API
 

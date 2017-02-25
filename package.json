@@ -31,7 +31,8 @@
   "license": "MIT",
   "files": [
     "src",
-    "dist"
+    "dist",
+    "mitt.d.ts"
   ],
   "eslintConfig": {
     "parser": "babel-eslint",
@@ -48,6 +49,7 @@
       "semi": [2, "always"]
     }
   },
+  "typings": "./mitt.d.ts",
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-eslint": "^7.1.1",
