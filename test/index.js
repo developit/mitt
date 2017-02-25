@@ -12,8 +12,8 @@ describe('mitt#', () => {
 	let events, inst;
 
 	beforeEach( () => {
-		inst = mitt();
-		events = inst.all;
+		events = Object.create(null);
+		inst = mitt(events);
 	});
 
 	describe('on()', () => {
