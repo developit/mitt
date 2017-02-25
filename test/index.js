@@ -112,38 +112,31 @@ describe('mitt#', () => {
 		});
 
 		it('should NOT ignore case', () => {
-			let foo = spy(),
-				bar = spy(),
-				num = 123;
-			events.Foo = [foo];
-			events.FOO = [bar];
+			let onFoo = spy(),
+				onFOO = spy();
+			events.Foo = [onFoo];
+			events.FOO = [onFOO];
 
-			inst.emit('FOO', num);
-			inst.emit('Foo', num);
+			inst.emit('Foo', 'Foo arg');
+			inst.emit('FOO', 'FOO arg');
 
-			let args1 = foo.args[0];
-			let args2 = bar.args[0];
-
-			expect(foo).to.have.been.calledOnce;
-			expect(bar).to.have.been.calledOnce;
-			expect(args1).to.be.deep.equal([num]);
-			expect(args2).to.be.deep.equal([num]);
+			expect(onFoo).to.have.been.calledOnce.and.calledWith('Foo arg');
+			expect(onFOO).to.have.been.calledOnce.and.calledWith('FOO arg');
 		});
 
 		it('should invoke * handlers', () => {
 			let star = spy(),
-				aa = 'bb';
+				ea = { a: 'a' },
+				eb = { b: 'b' };
+
 			events['*'] = [star];
 
-			inst.emit('foo', aa);
-			inst.emit('bar', aa);
+			inst.emit('foo', ea);
+			expect(star).to.have.been.calledOnce.and.calledWith('foo', ea);
+			star.reset();
 
-			let args1 = star.args[0],
-				args2 = star.args[1];
-
-			expect(star).to.have.been.calledTwice;
-			expect(args1).to.deep.equal(['foo', aa]);
-			expect(args2).to.deep.equal(['bar', aa]);
+			inst.emit('bar', eb);
+			expect(star).to.have.been.calledOnce.and.calledWith('bar', eb);
 		});
 	});
 });
