@@ -74,6 +74,7 @@ emitter.off('foo', onFoo)  // unlisten
 ```
 
 ### Typescript
+
 ```ts
 import * as mitt from 'mitt';
 let emitter: mitt.Emitter = new mitt();
