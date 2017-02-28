@@ -14,9 +14,10 @@ type EventHandlerMap = {
  *  @returns {Mitt}
  */
 export default function mitt(all: EventHandlerMap) {
-	all = all || Object.create(null);
+	all = all || {};
+	let instance;
 
-	return {
+	return instance = {
 		/**
 		 * Register an event handler for the given type.
 		 *
@@ -26,7 +27,9 @@ export default function mitt(all: EventHandlerMap) {
 		 * @memberOf mitt
 		 */
 		on(type: string, handler: EventHandler) {
-			(all[type] || (all[type] = [])).push(handler);
+			var arr = all[type] = all[type] || [];
+			arr.push(handler);
+			return instance.off.bind(instance, type, handler);
 		},
 
 		/**
@@ -38,8 +41,8 @@ export default function mitt(all: EventHandlerMap) {
 		 * @memberOf mitt
 		 */
 		off(type: string, handler: EventHandler) {
-			let e = all[type] || (all[type] = []);
-			e.splice(e.indexOf(handler) >>> 0, 1);
+			var arr = all[type] || [];
+			arr.splice(arr.indexOf(handler) >>> 0, 1);
 		},
 
 		/**
