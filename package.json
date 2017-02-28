@@ -31,7 +31,6 @@
   "license": "MIT",
   "files": [
     "src",
-    "dist",
     "mitt.d.ts"
   ],
   "eslintConfig": {

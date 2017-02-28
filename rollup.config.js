@@ -24,6 +24,7 @@ if (process.env.BROWSER) {
 } else {
 	config = Object.assign(config, {
 		plugins: [
+			flow(),
 			buble({
 				target: { node: '4' }
 			})
