@@ -1,5 +1,7 @@
-/dist
-/test-reports
-/node_modules
-/npm-debug.log
+dist
+test-reports
+node_modules
+npm-debug.log
 .DS_Store
+.nyc_output
+coverage
