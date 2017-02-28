@@ -25,14 +25,12 @@ if (process.env.BROWSER) {
 	config = Object.assign(config, {
 		plugins: [
 			flow(),
-			buble({
-				target: { node: '4' }
-			})
+			buble({ target: { node: '4' } })
 		],
-    targets: [
-      { dest: 'dist/mitt.common.js', format: 'cjs' },
-      { dest: 'dist/mitt.es.js', format: 'es' }
-    ]
+		targets: [
+			{ dest: 'dist/mitt.common.js', format: 'cjs' },
+			{ dest: 'dist/mitt.es.js', format: 'es' }
+		]
 	});
 }
 
