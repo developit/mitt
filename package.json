@@ -10,13 +10,17 @@
     "test": "npm-run-all -s lint test:*",
     "test:api": "nyc --reporter lcov mocha --compilers js:babel-register test/**/*.js",
     "test:report": "nyc report",
-    "commit": "npm-run-all -s test build git",
     "build": "npm-run-all -s build:*",
     "build:clean": "rimraf dist",
     "build:browser": "rollup -c --environment BROWSER",
     "build:node": "rollup -c --environment NODE",
     "build:show": "ls -al dist",
-    "release": "npm run build && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
+    "release": "npm-run-all -s test build git",
+    "git": "npm-run-all -s git:*",
+    "git:commit": "git commit -am $npm_package_version",
+    "git:tag": "git tag $npm_package_version",
+    "git:push": "git push && git push --tags",
+    "git:publish": "npm publish"
   },
   "repository": "developit/mitt",
   "keywords": [
@@ -30,8 +34,7 @@
   ],
   "license": "MIT",
   "files": [
-    "src",
-    "mitt.d.ts"
+    "src"
   ],
   "eslintConfig": {
     "parser": "babel-eslint",
@@ -52,7 +55,7 @@
       ]
     }
   },
-  "typings": "./mitt.d.ts",
+  "typings": "./src/mitt.d.ts",
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-eslint": "^7.1.1",
@@ -75,5 +78,12 @@
     "rollup-plugin-zopfli": "^1.0.2",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "statements": 100,
+    "functions": 100,
+    "branches": 90,
+    "lines": 100
   }
 }

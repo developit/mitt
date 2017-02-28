@@ -1,5 +1,5 @@
 {
   "name": "mitt",
-  "main": "mitt.d.ts",
+  "main": "src/mitt.d.ts",
   "version": false
 }
