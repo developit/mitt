@@ -1,22 +1,22 @@
 {
   "name": "mitt",
-  "amdName": "mitt",
   "version": "1.1.0",
   "description": "Tiny 200b functional Event Emitter / pubsub.",
-  "jsnext:main": "src/index.js",
-  "main": "dist/mitt.js",
-  "umd:main": "dist/mitt.umd.js",
+  "jsnext:main": "dist/mitt.es.js",
+  "module": "dist/mitt.es.js",
+  "main": "dist/mitt.common.js",
   "scripts": {
-    "test": "flow && eslint src test && mocha --compilers js:babel-register test/**/*.js",
-    "build": "npm-run-all clean -p rollup:* -p minify:* -s docs size",
-    "clean": "rimraf dist && mkdirp dist",
-    "rollup:cjs": "rollup -c rollup.config.js -m -f cjs -n $npm_package_amdName $npm_package_jsnext_main -o $npm_package_main",
-    "rollup:umd": "rollup -c rollup.config.js -m -f umd -n $npm_package_amdName $npm_package_jsnext_main -o $npm_package_umd_main",
-    "minify:cjs": "uglifyjs $npm_package_main -cm toplevel -o $npm_package_main -p relative --in-source-map ${npm_package_main}.map --source-map ${npm_package_main}.map",
-    "minify:umd": "uglifyjs $npm_package_umd_main -cm -o $npm_package_umd_main -p relative --in-source-map ${npm_package_umd_main}.map --source-map ${npm_package_umd_main}.map",
-    "docs": "documentation readme src/index.js --section API -q",
-    "size": "echo \"Gzipped Size: $(strip-json-comments --no-whitespace $npm_package_main | gzip-size | pretty-bytes)\"",
-    "release": "npm run build -s && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
+    "lint": "flow && eslint src test",
+    "test": "npm-run-all -s lint test:*",
+    "test:api": "nyc --reporter lcov mocha --compilers js:babel-register test/**/*.js",
+    "test:report": "nyc report",
+    "commit": "npm-run-all -s test build git",
+    "build": "npm-run-all -s build:*",
+    "build:clean": "rimraf dist",
+    "build:browser": "rollup -c --environment BROWSER",
+    "build:node": "rollup -c --environment NODE",
+    "build:show": "ls -al dist",
+    "release": "npm run build && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "repository": "developit/mitt",
   "keywords": [
@@ -40,13 +40,17 @@
     "env": {
       "browser": true,
       "mocha": true,
+      "node": true,
       "es6": true
     },
     "globals": {
       "expect": true
     },
     "rules": {
-      "semi": [2, "always"]
+      "semi": [
+        2,
+        "always"
+      ]
     }
   },
   "typings": "./mitt.d.ts",
@@ -58,21 +62,19 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
-    "documentation": "^4.0.0-beta4",
     "eslint": "^3.13.1",
     "flow-bin": "^0.38.0",
-    "gzip-size-cli": "^1.0.0",
     "mkdirp": "^0.5.1",
     "mocha": "^3.2.0",
     "npm-run-all": "^2.1.1",
-    "pretty-bytes-cli": "^2.0.0",
-    "rimraf": "^2.5.2",
+    "nyc": "^10.1.2",
+    "rimraf": "^2.6.1",
     "rollup": "^0.41.4",
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-flow": "^1.1.1",
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-plugin-zopfli": "^1.0.2",
     "sinon": "^1.17.4",
-    "sinon-chai": "^2.8.0",
-    "strip-json-comments-cli": "^1.0.1",
-    "uglify-js": "^2.6.2"
+    "sinon-chai": "^2.8.0"
   }
 }
