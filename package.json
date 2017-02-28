@@ -31,8 +31,7 @@
   "license": "MIT",
   "files": [
     "src",
-    "dist",
-    "mitt.d.ts"
+    "dist"
   ],
   "eslintConfig": {
     "parser": "babel-eslint",
