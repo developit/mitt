@@ -1,12 +1,13 @@
 {
   "name": "mitt",
   "amdName": "mitt",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Tiny 200b functional Event Emitter / pubsub.",
   "jsnext:main": "src/index.js",
   "main": "dist/mitt.js",
   "umd:main": "dist/mitt.umd.js",
   "scripts": {
+    "bump": "standard-version",
     "test": "flow && eslint src test && mocha --compilers js:babel-register test/**/*.js",
     "build": "npm-run-all clean -p rollup:* -p minify:* -s docs size",
     "clean": "rimraf dist && mkdirp dist",
@@ -16,7 +17,7 @@
     "minify:umd": "uglifyjs $npm_package_umd_main -cm -o $npm_package_umd_main -p relative --in-source-map ${npm_package_umd_main}.map --source-map ${npm_package_umd_main}.map",
     "docs": "documentation readme src/index.js --section API -q",
     "size": "echo \"Gzipped Size: $(strip-json-comments --no-whitespace $npm_package_main | gzip-size | pretty-bytes)\"",
-    "release": "npm run build -s && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
+    "release": "npm run build -s && npm run bump"
   },
   "repository": "developit/mitt",
   "keywords": [
@@ -46,7 +47,10 @@
       "expect": true
     },
     "rules": {
-      "semi": [2, "always"]
+      "semi": [
+        2,
+        "always"
+      ]
     }
   },
   "typings": "./mitt.d.ts",
@@ -72,6 +76,7 @@
     "rollup-plugin-flow": "^1.1.1",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
+    "standard-version": "^4.0.0",
     "strip-json-comments-cli": "^1.0.1",
     "uglify-js": "^2.6.2"
   }
