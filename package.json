@@ -17,7 +17,7 @@
     "minify:umd": "uglifyjs $npm_package_umd_main -cm -o $npm_package_umd_main -p relative --in-source-map ${npm_package_umd_main}.map --source-map ${npm_package_umd_main}.map",
     "docs": "documentation readme src/index.js --section API -q",
     "size": "echo \"Gzipped Size: $(strip-json-comments --no-whitespace $npm_package_main | gzip-size | pretty-bytes)\"",
-    "release": "npm run build -s && npm run bump"
+    "release": "npm run build -s && npm run bump && git push --follow-tags origin master && npm publish"
   },
   "repository": "developit/mitt",
   "keywords": [
