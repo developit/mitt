@@ -137,6 +137,12 @@ Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 First off, thanks for taking the time to contribute!
 Now, take a moment to be sure your contributions make sense to everyone else.
 
+Development Start:
+
+TThis project is typed with Flow Type annotations. To ensure you have the proper typings for this project run
+
+`flow-typed install` or `npm run flow`
+
 ### Reporting Issues
 
 Found a problem? Want a new feature? First of all see if your issue or idea has [already been reported](../../issues).

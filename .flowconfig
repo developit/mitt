@@ -1,5 +1,5 @@
 [ignore]
-.*/node_modules/conventional-changelog-core/.*
+.*/node_modules/.*
 
 [include]
 
