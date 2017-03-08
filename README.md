@@ -141,7 +141,7 @@ Development Start:
 
 TThis project is typed with Flow Type annotations. To ensure you have the proper typings for this project run
 
-`flow-typed install` or `npm run flow`
+`flow-typed install`
 
 ### Reporting Issues
 
