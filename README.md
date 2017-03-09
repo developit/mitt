@@ -108,8 +108,6 @@ If present, `"*"` handlers are invoked prior to type-matched handlers.
 -   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The event type to invoke
 -   `evt` **\[Any]** Any value (object is recommended and powerful), passed to each handler
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the `mitt` instance for chaining
-
 ### on
 
 Register an event handler for the given type.
@@ -119,8 +117,6 @@ Register an event handler for the given type.
 -   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Type of event to listen for, or `"*"` for all events
 -   `handler` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** Function to call in response to given event
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the `mitt` instance for chaining
-
 ### off
 
 Remove an event handler for the given type.
@@ -129,8 +125,6 @@ Remove an event handler for the given type.
 
 -   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Type of event to unregister `handler` from, or `"*"`
 -   `handler` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** Handler function to remove
-
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the `mitt` instance for chaining
 
 ## Contribute
 
