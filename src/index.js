@@ -22,7 +22,6 @@ export default function mitt(all: EventHandlerMap) {
 		 *
 		 * @param  {String} type    Type of event to listen for, or `"*"` for all events
 		 * @param  {Function} handler Function to call in response to given event
-		 * @return {Object} the `mitt` instance for chaining
 		 * @memberOf mitt
 		 */
 		on(type: string, handler: EventHandler) {
@@ -34,7 +33,6 @@ export default function mitt(all: EventHandlerMap) {
 		 *
 		 * @param  {String} type    Type of event to unregister `handler` from, or `"*"`
 		 * @param  {Function} handler Handler function to remove
-		 * @return {Object} the `mitt` instance for chaining
 		 * @memberOf mitt
 		 */
 		off(type: string, handler: EventHandler) {
@@ -48,7 +46,6 @@ export default function mitt(all: EventHandlerMap) {
 		 *
 		 * @param {String} type  The event type to invoke
 		 * @param {Any} [evt]  Any value (object is recommended and powerful), passed to each handler
-		 * @return {Object} the `mitt` instance for chaining
 		 * @memberof mitt
 		 */
 		emit(type: string, evt: EventHandler) {
