@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "Tiny 200b functional Event Emitter / pubsub.",
   "jsnext:main": "src/index.js",
+  "module": "dist/mitt.es.js",
   "main": "dist/mitt.js",
   "umd:main": "dist/mitt.umd.js",
   "scripts": {
