@@ -101,7 +101,7 @@ Returns **Mitt**
 #### emit
 
 Invoke all handlers for the given type.
-If present, `"*"` handlers are invoked prior to type-matched handlers.
+If present, `"*"` handlers are invoked after type-matched handlers.
 
 **Parameters**
 
