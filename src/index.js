@@ -42,7 +42,7 @@ export default function mitt(all: EventHandlerMap) {
 
 		/**
 		 * Invoke all handlers for the given type.
-		 * If present, `"*"` handlers are invoked prior to type-matched handlers.
+		 * If present, `"*"` handlers are invoked after type-matched handlers.
 		 *
 		 * @param {String} type  The event type to invoke
 		 * @param {Any} [evt]  Any value (object is recommended and powerful), passed to each handler
