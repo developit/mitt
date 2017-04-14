@@ -36,8 +36,9 @@ export default function mitt(all: EventHandlerMap) {
 		 * @memberOf mitt
 		 */
 		off(type: string, handler: EventHandler) {
-			let e = all[type] || (all[type] = []);
-			e.splice(e.indexOf(handler) >>> 0, 1);
+			if (all[type]) {
+				all[type].splice(all[type].indexOf(handler) >>> 0, 1);
+			}
 		},
 
 		/**
