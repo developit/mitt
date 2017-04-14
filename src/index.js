@@ -20,7 +20,7 @@ export default function mitt(all: EventHandlerMap) {
 		/**
 		 * Register an event handler for the given type.
 		 *
-		 * @param  {String} type    Type of event to listen for, or `"*"` for all events
+		 * @param  {String} type	Type of event to listen for, or `"*"` for all events
 		 * @param  {Function} handler Function to call in response to given event
 		 * @memberOf mitt
 		 */
@@ -31,7 +31,7 @@ export default function mitt(all: EventHandlerMap) {
 		/**
 		 * Remove an event handler for the given type.
 		 *
-		 * @param  {String} type    Type of event to unregister `handler` from, or `"*"`
+		 * @param  {String} type	Type of event to unregister `handler` from, or `"*"`
 		 * @param  {Function} handler Handler function to remove
 		 * @memberOf mitt
 		 */
