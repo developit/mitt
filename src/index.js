@@ -20,7 +20,7 @@ export default function mitt(all: EventHandlerMap) {
 		/**
 		 * Register an event handler for the given type.
 		 *
-		 * @param  {String} type    Type of event to listen for, or `"*"` for all events
+		 * @param  {String} type	Type of event to listen for, or `"*"` for all events
 		 * @param  {Function} handler Function to call in response to given event
 		 * @memberOf mitt
 		 */
@@ -31,18 +31,19 @@ export default function mitt(all: EventHandlerMap) {
 		/**
 		 * Remove an event handler for the given type.
 		 *
-		 * @param  {String} type    Type of event to unregister `handler` from, or `"*"`
+		 * @param  {String} type	Type of event to unregister `handler` from, or `"*"`
 		 * @param  {Function} handler Handler function to remove
 		 * @memberOf mitt
 		 */
 		off(type: string, handler: EventHandler) {
-			let e = all[type] || (all[type] = []);
-			e.splice(e.indexOf(handler) >>> 0, 1);
+			if (all[type]) {
+				all[type].splice(all[type].indexOf(handler) >>> 0, 1);
+			}
 		},
 
 		/**
 		 * Invoke all handlers for the given type.
-		 * If present, `"*"` handlers are invoked prior to type-matched handlers.
+		 * If present, `"*"` handlers are invoked after type-matched handlers.
 		 *
 		 * @param {String} type  The event type to invoke
 		 * @param {Any} [evt]  Any value (object is recommended and powerful), passed to each handler

@@ -75,7 +75,7 @@ describe('mitt#', () => {
 			expect(events).to.have.property('foo').that.is.empty;
 		});
 
-		it('should normalize case', () => {
+		it('should NOT normalize case', () => {
 			let foo = () => {};
 			inst.on('FOO', foo);
 			inst.on('Bar', foo);
@@ -89,7 +89,7 @@ describe('mitt#', () => {
 			expect(events).to.not.have.property('foo');
 			expect(events).to.have.property('Bar').that.is.empty;
 			expect(events).to.not.have.property('bar');
-			expect(events).to.have.property('baz:baT!').that.is.empty;
+			expect(events).to.have.property('baz:bat!').with.length(1);
 		});
 	});
 
