@@ -1,9 +1,6 @@
 // @flow
 // An event handler can take an optional event argument
 // and should not return a value
-// @flow
-// An event handler can take an optional event argument
-// and should not return a value
 type EventHandler = (event?: any) => void;
 type WildCardEventHandler = (type: string, event?: any) => void
 
