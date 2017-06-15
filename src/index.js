@@ -9,7 +9,7 @@ type EventHandlerList = Array<EventHandler>;
 type WildCardEventHandlerList = Array<WildCardEventHandler>;
 // A map of event types and their corresponding event handlers.
 type EventHandlerMap = {
-  '*': WildCardEventHandlerList,
+  '*'?: WildCardEventHandlerList,
   [type: string]: EventHandlerList,
 };
 
