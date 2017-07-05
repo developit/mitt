@@ -1,11 +1,15 @@
 // @flow
 // An event handler can take an optional event argument
 // and should not return a value
-type EventHandler = (typeOrEvent?: string|any, event?: any) => void;
+type EventHandler = (event?: any) => void;
+type WildCardEventHandler = (type: string, event?: any) => void
+
 // An array of all currently registered event handlers for a type
 type EventHandlerList = Array<EventHandler>;
+type WildCardEventHandlerList = Array<WildCardEventHandler>;
 // A map of event types and their corresponding event handlers.
 type EventHandlerMap = {
+  '*'?: WildCardEventHandlerList,
   [type: string]: EventHandlerList,
 };
 
@@ -49,7 +53,7 @@ export default function mitt(all: EventHandlerMap) {
 		 * @param {Any} [evt]  Any value (object is recommended and powerful), passed to each handler
 		 * @memberof mitt
 		 */
-		emit(type: string, evt?: any) {
+		emit(type: string, evt: any) {
 			(all[type] || []).map((handler) => { handler(evt); });
 			(all['*'] || []).map((handler) => { handler(type, evt); });
 		}
