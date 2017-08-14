@@ -98,7 +98,7 @@ Mitt: Tiny (~200b) functional event emitter / pubsub.
 
 Returns **Mitt** 
 
-#### emit
+### emit
 
 Invoke all handlers for the given type.
 If present, `"*"` handlers are invoked after type-matched handlers.
