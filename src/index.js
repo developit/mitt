@@ -51,7 +51,7 @@ export default function mitt(all: EventHandlerMap) {
 		 *
 		 * @param {String} type  The event type to invoke
 		 * @param {Any} [evt]  Any value (object is recommended and powerful), passed to each handler
-		 * @memberof mitt
+		 * @memberOf mitt
 		 */
 		emit(type: string, evt: any) {
 			(all[type] || []).map((handler) => { handler(evt); });
