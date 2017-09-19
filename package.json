@@ -57,7 +57,11 @@
   "size-limit": [
     {
       "path": "dist/mitt.js",
-      "limit": "100 B"
+      "limit": "99 B"
+    },
+    {
+      "path": "dist/mitt.es.js",
+      "limit": "127 B"
     }
   ],
   "typings": "./mitt.d.ts",
