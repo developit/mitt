@@ -40,9 +40,7 @@ export default function mitt(all: EventHandlerMap) {
 		 * @memberOf mitt
 		 */
 		off(type: string, handler: EventHandler) {
-			if (all[type]) {
-				all[type].splice(all[type].indexOf(handler) >>> 0, 1);
-			}
+			all[type] && all[type].splice(all[type].indexOf(handler) >>> 0, 1);
 		},
 
 		/**
