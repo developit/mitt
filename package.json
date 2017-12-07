@@ -36,6 +36,15 @@
     "dist",
     "mitt.d.ts"
   ],
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ],
+    "plugins": [
+      "transform-flow-strip-types"
+    ]
+  },
   "eslintConfig": {
     "parser": "babel-eslint",
     "extends": "eslint:recommended",

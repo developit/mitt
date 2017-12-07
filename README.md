@@ -164,4 +164,4 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 
 ## License
 
-[MIT License](LICENSE.md) © [Jason Miller](https://jasonformat.com/)
+[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
