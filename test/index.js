@@ -75,6 +75,28 @@ describe('mitt#', () => {
 			expect(events).to.have.property('foo').that.is.empty;
 		});
 
+		it('should remove all handlers when invoked without type', () => {
+			const onFoo = spy();
+			const onBar = spy();
+
+			inst.on('foo', onFoo);
+			inst.on('bar', onBar);
+
+			inst.emit('foo', 1);
+			inst.emit('foo', 2);
+			inst.emit('bar', 3);
+
+			inst.off();
+
+			inst.emit('foo', 4);
+			inst.emit('foo', 5);
+			inst.emit('bar', 6);
+			inst.emit('bar', 7);
+
+			expect(onFoo).to.have.callCount(2);
+			expect(onBar).to.have.callCount(1);
+		});
+
 		it('should NOT normalize case', () => {
 			let foo = () => {};
 			inst.on('FOO', foo);

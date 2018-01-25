@@ -40,7 +40,9 @@ export default function mitt(all: EventHandlerMap) {
 		 * @memberOf mitt
 		 */
 		off(type: string, handler: EventHandler) {
-			if (all[type]) {
+			if (!type) {
+				all = Object.create(null);
+			} else if (all[type]) {
 				all[type].splice(all[type].indexOf(handler) >>> 0, 1);
 			}
 		},
