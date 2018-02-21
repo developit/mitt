@@ -8,7 +8,7 @@ declare namespace mitt {
 	type Handler = (event?: any) => void;
 
 	interface MittStatic {
-		new(all?: {[key: string]: Handler}): Emitter;
+		new(all?: {[key: string]: Array<Handler>}): Emitter;
 	}
 
 	interface Emitter {
