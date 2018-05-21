@@ -7,6 +7,8 @@
 
 # Mitt
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/developit/mitt.svg)](https://greenkeeper.io/)
+
 > Tiny 200b functional event emitter / pubsub.
 
 -   **Microscopic:** weighs less than 200 bytes gzipped
