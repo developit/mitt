@@ -33,6 +33,7 @@ declare namespace mitt {
 		 * @memberOf Mitt
 		 */
 		off(type: string, handler: Handler): void;
+		off(type: "*", handler: WildcardHandler): void;
 
 		/**
 		 * Invoke all handlers for the given type.
