@@ -57,7 +57,7 @@ You can find the library on `window.mitt`.
 ```js
 import mitt from 'mitt'
 
-let emitter = mitt()
+const emitter = mitt()
 
 // listen to an event
 emitter.on('foo', e => console.log('foo', e) )
@@ -77,8 +77,8 @@ emitter.off('foo', onFoo)  // unlisten
 ### Typescript
 
 ```ts
-import * as mitt from 'mitt';
-let emitter: mitt.Emitter = new mitt();
+import mitt from 'mitt';
+const emitter: mitt.Emitter = mitt();
 ```
 
 ## Examples & Demos
