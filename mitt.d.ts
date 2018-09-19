@@ -6,6 +6,7 @@ declare module "mitt" {
 
 declare namespace mitt {
 	type Handler = (event?: any) => void;
+	type WildcardHandler = (type?: string, event?: any) => void;
 
 	interface MittStatic {
 		(all?: {[key: string]: Handler}): Emitter;
@@ -21,6 +22,7 @@ declare namespace mitt {
 		 * @memberOf Mitt
 		 */
 		on(type: string, handler: Handler): void;
+		on(type: "*", handler: WildcardHandler): void;
 
 		/**
 		 * Function to call in response to the given event
@@ -31,6 +33,7 @@ declare namespace mitt {
 		 * @memberOf Mitt
 		 */
 		off(type: string, handler: Handler): void;
+		off(type: "*", handler: WildcardHandler): void;
 
 		/**
 		 * Invoke all handlers for the given type.
