@@ -9,7 +9,7 @@ declare namespace mitt {
 	type WildcardHandler = (type?: string, event?: any) => void;
 
 	interface MittStatic {
-		(all?: {[key: string]: Handler}): Emitter;
+		(all?: {[key: string]: Array<Handler>}): Emitter;
 	}
 
 	interface Emitter {
