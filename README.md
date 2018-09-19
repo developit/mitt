@@ -1,7 +1,8 @@
 <p align="center">
   <img src="https://i.imgur.com/BqsX9NT.png" width="300" height="300" alt="mitt">
   <br>
-  <a href="https://www.npmjs.org/package/mitt"><img src="https://img.shields.io/npm/v/mitt.svg?style=flat" alt="npm"></a> <a href="https://travis-ci.org/developit/mitt"><img src="https://travis-ci.org/developit/mitt.svg?branch=master" alt="travis"></a> <a href="https://david-dm.org/developit/mitt"><img src="https://david-dm.org/developit/mitt/status.svg" alt="dependencies Status"></a>
+  <a href="https://www.npmjs.org/package/mitt"><img src="https://img.shields.io/npm/v/mitt.svg?style=flat" alt="npm"></a> <a href="https://travis-ci.org/developit/mitt"><img src="https://travis-ci.org/developit/mitt.svg?branch=master" alt="travis"></a> <a href="https://david-dm.org/developit/mitt"><img src="https://david-dm.org/developit/mitt/status.svg" alt="dependencies Status"></a> <a href="https://unpkg.com/mitt/dist/mitt.umd.js"><img src="http://img.badgesize.io/https://unpkg.com/mitt/dist/mitt.umd.js?compression=gzip" alt="gzip size"></a> <a href="https://packagephobia.now.sh/result?p=mitt"><img src="https://packagephobia.now.sh/badge?p=mitt" alt="install size"></a>
+  
 </p>
 
 # Mitt
@@ -56,7 +57,7 @@ You can find the library on `window.mitt`.
 ```js
 import mitt from 'mitt'
 
-let emitter = mitt()
+const emitter = mitt()
 
 // listen to an event
 emitter.on('foo', e => console.log('foo', e) )
@@ -76,8 +77,8 @@ emitter.off('foo', onFoo)  // unlisten
 ### Typescript
 
 ```ts
-import * as mitt from 'mitt';
-let emitter: mitt.Emitter = new mitt();
+import mitt from 'mitt';
+const emitter: mitt.Emitter = mitt();
 ```
 
 ## Examples & Demos
