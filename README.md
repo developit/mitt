@@ -41,7 +41,7 @@ Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](http
 import mitt from 'mitt'
 
 // using CommonJS modules
-var mitt = require('mitt')
+var mitt = require('mitt').default
 ```
 
 The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
