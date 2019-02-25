@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"lib": ["es2015"],
+		"baseUrl": ".",
+		"noEmit": true,
+		"strict": true,
+		"moduleResolution": "node",
+		"paths": {
+			"mitt": [
+				".."
+			]
+		}
+	},
+	"include": ["."]
+}

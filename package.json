@@ -6,11 +6,13 @@
   "module": "dist/mitt.es.js",
   "main": "dist/mitt.js",
   "umd:main": "dist/mitt.umd.js",
+  "types": "./typescript/index.d.ts",
   "scripts": {
     "bump": "standard-version",
+    "dtslint": "dtslint --onlyTestTsNext ./typescript",
     "testonly": "mocha --require reify/node --require flow-remove-types/register test/**/*.js",
     "lint": "eslint src test",
-    "test": "flow && npm run lint && npm run testonly",
+    "test": "flow && dtslint && npm run lint && npm run testonly",
     "build": "npm-run-all --silent clean -p rollup -p minify:* -s docs size",
     "clean": "rimraf dist",
     "rollup": "rollup -c",
@@ -34,7 +36,7 @@
   "files": [
     "src",
     "dist",
-    "mitt.d.ts"
+    "typescript"
   ],
   "babel": {
     "presets": [
@@ -63,7 +65,6 @@
       ]
     }
   },
-  "typings": "./mitt.d.ts",
   "devDependencies": {
     "babel-core": "^6.9.1",
     "babel-eslint": "^7.1.1",
@@ -72,6 +73,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
     "documentation": "^4.0.0-beta4",
+    "dtslint": "^0.5.0",
     "eslint": "^3.13.1",
     "flow-bin": "^0.38.0",
     "flow-remove-types": "^1.2.0",
