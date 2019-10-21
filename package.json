@@ -46,8 +46,11 @@
     ]
   },
   "eslintConfig": {
-    "parser": "babel-eslint",
     "extends": "eslint:recommended",
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "sourceType": "module"
+    },
     "env": {
       "browser": true,
       "mocha": true,
@@ -66,13 +69,13 @@
   "typings": "./mitt.d.ts",
   "devDependencies": {
     "babel-core": "^6.9.1",
-    "babel-eslint": "^7.1.1",
+    "babel-eslint": "^10.0.3",
     "babel-plugin-transform-flow-strip-types": "^6.21.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
     "documentation": "^4.0.0-beta4",
-    "eslint": "^3.13.1",
+    "eslint": "^6.5.1",
     "esm": "^3.2.25",
     "flow-bin": "^0.38.0",
     "flow-remove-types": "^1.2.0",
