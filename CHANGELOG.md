@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/developit/mitt/compare/v1.1.3...v1.2.1) (2019-10-21)
+
+
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/developit/mitt/compare/v1.1.2...v1.1.3) (2017-12-07)
 
