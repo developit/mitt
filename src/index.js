@@ -54,8 +54,8 @@ export default function mitt(all: EventHandlerMap) {
 		 * @memberOf mitt
 		 */
 		emit(type: string, evt: any) {
-			(all[type] || []).slice().map((handler) => { handler(evt); });
-			(all['*'] || []).slice().map((handler) => { handler(type, evt); });
+			(all[type] || []).map((handler) => { handler(evt); });
+			(all['*'] || []).map((handler) => { handler(type, evt); });
 		}
 	};
 }
