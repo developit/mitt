@@ -45,5 +45,9 @@ declare namespace mitt {
 		 * @memberOf Mitt
 		 */
 		emit(type: string, event?: any): void;
+		/**
+		 * Note: Manually firing "*" events is unsupported.
+		 */
+		emit(type: "*", event?: any): void;
 	}
 }
