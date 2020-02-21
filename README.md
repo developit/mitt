@@ -128,6 +128,8 @@ Remove an event handler for the given type.
 Invoke all handlers for the given type.
 If present, `"*"` handlers are invoked after type-matched handlers.
 
+_Note: Manually firing "*" handlers is not supported._
+
 **Parameters**
 
 -   `type` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The event type to invoke
