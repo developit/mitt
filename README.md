@@ -79,6 +79,13 @@ emitter.off('foo', onFoo)  // unlisten
 ```ts
 import mitt from 'mitt';
 const emitter: mitt.Emitter = mitt();
+
+// Optional: Event typings can be provided as well
+declare module 'mitt' {
+  interface EventTypes {
+    foo: { bar: string }
+  }
+}
 ```
 
 ## Examples & Demos

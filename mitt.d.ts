@@ -5,14 +5,20 @@ declare module "mitt" {
 }
 
 declare namespace mitt {
-	type Handler = (event?: any) => void;
+	type Handler<T = any | undefined> = (event: T) => void;
 	type WildcardHandler = (type: string, event?: any) => void;
 
 	interface MittStatic {
-		(all?: {[key: string]: Array<Handler>}): Emitter;
+		(all?: {[key: string]: Array<Handler>}): Emitter<EventTypes>;
 	}
 
-	interface Emitter {
+	/**
+	 * Augment this interface to provide typings for events
+	 */
+	interface EventTypes {
+	}
+
+	interface Emitter<T> {
 		/**
 		 * Register an event handler for the given type.
 		 *
@@ -21,7 +27,8 @@ declare namespace mitt {
 		 *
 		 * @memberOf Mitt
 		 */
-		on(type: string, handler: Handler): void;
+		on(type: keyof T extends never ? string : never, handler: Handler): void;
+		on<K extends keyof T>(type: K, handler: Handler<T[K]>): void;
 		on(type: "*", handler: WildcardHandler): void;
 
 		/**
@@ -32,7 +39,8 @@ declare namespace mitt {
 		 *
 		 * @memberOf Mitt
 		 */
-		off(type: string, handler: Handler): void;
+		off(type: keyof T extends never ? string : never, handler: Handler): void;
+		off<K extends keyof T>(type: K, handler: Handler<T[K]>): void;
 		off(type: "*", handler: WildcardHandler): void;
 
 		/**
@@ -44,7 +52,8 @@ declare namespace mitt {
 		 *
 		 * @memberOf Mitt
 		 */
-		emit(type: string, event?: any): void;
+		emit(type: keyof T extends never ? string : never, event?: any): void;
+		emit<K extends keyof T>(type: K, event: T[K]): void;
 		/**
 		 * Note: Manually firing "*" events is unsupported.
 		 */
