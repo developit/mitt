@@ -65,6 +65,8 @@
   },
   "typings": "dist/index.d.ts",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
     "chai": "^3.5.0",
     "documentation": "^13.0.0",
     "eslint": "^6.5.1",
