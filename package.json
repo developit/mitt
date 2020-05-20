@@ -15,7 +15,7 @@
     "bundle": "microbundle",
     "build": "npm-run-all --silent clean -p bundle -s docs size",
     "clean": "rimraf dist",
-    "docs": "documentation readme src/index.js --section API -q",
+    "docs": "documentation readme src/index.ts --section API -q --parse-extension ts",
     "size": "echo \"Gzipped Size: $(strip-json-comments --no-whitespace $npm_package_main | gzip-size | pretty-bytes)\"",
     "release": "npm run build -s && npm run bump && git push --follow-tags origin master && npm publish"
   },
@@ -66,7 +66,7 @@
   "typings": "dist/index.d.ts",
   "devDependencies": {
     "chai": "^3.5.0",
-    "documentation": "^4.0.0-beta4",
+    "documentation": "^13.0.0",
     "eslint": "^6.5.1",
     "esm": "^3.2.25",
     "gzip-size-cli": "^1.0.0",
