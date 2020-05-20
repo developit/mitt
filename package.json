@@ -9,7 +9,7 @@
   "umd:main": "dist/mitt.umd.js",
   "scripts": {
     "bump": "standard-version",
-    "testonly": "mocha -require esm --require ts-node/register test/**/*.js",
+    "testonly": "mocha --require esm --require ts-node/register test/**/*.js",
     "lint": "eslint src test --ext ts --ext js",
     "test": "tsc src/index.ts --noEmit && npm run lint && npm run testonly",
     "bundle": "microbundle",
