@@ -11,7 +11,7 @@ type EventHandlerMap = {
   [type: string]: EventHandlerList;
 };
 
-interface Emitter {
+export interface Emitter {
 	/**
 	 * Register an event handler for the given type.
 	 *
