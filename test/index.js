@@ -24,22 +24,22 @@ describe('mitt#', () => {
 		});
 
 		it('should register handler for new type', () => {
-			let foo = () => {};
+			const foo = () => {};
 			inst.on('foo', foo);
 
 			expect(events).to.have.property('foo').that.deep.equals([foo]);
 		});
 
 		it('should register handlers for any type strings', () => {
-			let foo = () => {};
+			const foo = () => {};
 			inst.on('constructor', foo);
 
 			expect(events).to.have.property('constructor').that.deep.equals([foo]);
 		});
 
 		it('should append handler for existing type', () => {
-			let foo = () => {};
-			let bar = () => {};
+			const foo = () => {};
+			const bar = () => {};
 			inst.on('foo', foo);
 			inst.on('foo', bar);
 
@@ -47,7 +47,7 @@ describe('mitt#', () => {
 		});
 
 		it('should NOT normalize case', () => {
-			let foo = () => {};
+			const foo = () => {};
 			inst.on('FOO', foo);
 			inst.on('Bar', foo);
 			inst.on('baz:baT!', foo);
@@ -68,7 +68,7 @@ describe('mitt#', () => {
 		});
 
 		it('should remove handler for type', () => {
-			let foo = () => {};
+			const foo = () => {};
 			inst.on('foo', foo);
 			inst.off('foo', foo);
 
@@ -76,7 +76,7 @@ describe('mitt#', () => {
 		});
 
 		it('should NOT normalize case', () => {
-			let foo = () => {};
+			const foo = () => {};
 			inst.on('FOO', foo);
 			inst.on('Bar', foo);
 			inst.on('baz:bat!', foo);
@@ -101,7 +101,7 @@ describe('mitt#', () => {
 		});
 
 		it('should invoke handler for type', () => {
-			let event = { a: 'b' };
+			const event = { a: 'b' };
 
 			inst.on('foo', (one, two) => {
 				expect(one).to.deep.equal(event);
@@ -112,7 +112,7 @@ describe('mitt#', () => {
 		});
 
 		it('should NOT ignore case', () => {
-			let onFoo = spy(),
+			const onFoo = spy(),
 				onFOO = spy();
 			events.Foo = [onFoo];
 			events.FOO = [onFOO];
@@ -125,7 +125,7 @@ describe('mitt#', () => {
 		});
 
 		it('should invoke * handlers', () => {
-			let star = spy(),
+			const star = spy(),
 				ea = { a: 'a' },
 				eb = { b: 'b' };
 
