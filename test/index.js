@@ -12,7 +12,7 @@ describe('mitt#', () => {
 	let events, inst;
 
 	beforeEach( () => {
-		events = Object.create(null);
+		events = new Map();
 		inst = mitt(events);
 	});
 
@@ -27,14 +27,14 @@ describe('mitt#', () => {
 			const foo = () => {};
 			inst.on('foo', foo);
 
-			expect(events).to.have.property('foo').that.deep.equals([foo]);
+			expect(events.get('foo')).to.deep.equal([foo]);
 		});
 
 		it('should register handlers for any type strings', () => {
 			const foo = () => {};
 			inst.on('constructor', foo);
 
-			expect(events).to.have.property('constructor').that.deep.equals([foo]);
+			expect(events.get('constructor')).to.deep.equal([foo]);
 		});
 
 		it('should append handler for existing type', () => {
@@ -43,7 +43,7 @@ describe('mitt#', () => {
 			inst.on('foo', foo);
 			inst.on('foo', bar);
 
-			expect(events).to.have.property('foo').that.deep.equals([foo, bar]);
+			expect(events.get('foo')).to.deep.equal([foo, bar]);
 		});
 
 		it('should NOT normalize case', () => {
@@ -52,11 +52,11 @@ describe('mitt#', () => {
 			inst.on('Bar', foo);
 			inst.on('baz:baT!', foo);
 
-			expect(events).to.have.property('FOO').that.deep.equals([foo]);
-			expect(events).to.not.have.property('foo');
-			expect(events).to.have.property('Bar').that.deep.equals([foo]);
-			expect(events).to.not.have.property('bar');
-			expect(events).to.have.property('baz:baT!').that.deep.equals([foo]);
+			expect(events.get('FOO')).to.deep.equal([foo]);
+			expect(events.has('foo')).to.equal(false);
+			expect(events.get('Bar')).to.deep.equal([foo]);
+			expect(events.has('bar')).to.equal(false);
+			expect(events.get('baz:baT!')).to.deep.equal([foo]);
 		});
 	});
 
@@ -72,7 +72,7 @@ describe('mitt#', () => {
 			inst.on('foo', foo);
 			inst.off('foo', foo);
 
-			expect(events).to.have.property('foo').that.is.empty;
+			expect(events.get('foo')).to.be.empty;
 		});
 
 		it('should NOT normalize case', () => {
@@ -85,11 +85,11 @@ describe('mitt#', () => {
 			inst.off('Bar', foo);
 			inst.off('baz:baT!', foo);
 
-			expect(events).to.have.property('FOO').that.is.empty;
-			expect(events).to.not.have.property('foo');
-			expect(events).to.have.property('Bar').that.is.empty;
-			expect(events).to.not.have.property('bar');
-			expect(events).to.have.property('baz:bat!').with.length(1);
+			expect(events.get('FOO')).to.be.empty;
+			expect(events.has('foo')).to.equal(false);
+			expect(events.get('Bar')).to.be.empty;
+			expect(events.has('bar')).to.equal(false);
+			expect(events.get('baz:bat!')).to.have.lengthOf(1);
 		});
 	});
 
@@ -114,8 +114,8 @@ describe('mitt#', () => {
 		it('should NOT ignore case', () => {
 			const onFoo = spy(),
 				onFOO = spy();
-			events.Foo = [onFoo];
-			events.FOO = [onFOO];
+			events.set('Foo', [onFoo]);
+			events.set('FOO', [onFOO]);
 
 			inst.emit('Foo', 'Foo arg');
 			inst.emit('FOO', 'FOO arg');
@@ -129,7 +129,7 @@ describe('mitt#', () => {
 				ea = { a: 'a' },
 				eb = { b: 'b' };
 
-			events['*'] = [star];
+			events.set('*', [star]);
 
 			inst.emit('foo', ea);
 			expect(star).to.have.been.calledOnce.and.calledWith('foo', ea);
