@@ -2,8 +2,8 @@ type EventType = string | symbol;
 
 // An event handler can take an optional event argument
 // and should not return a value
-type Handler<T = any> = (event?: T) => void;
-type WildcardHandler = (type: EventType, event?: any) => void
+type Handler = (event?: any) => void;
+type WildcardHandler= (type: EventType, event?: any) => void
 
 // An array of all currently registered event handlers for a type
 type EventHandlerList = Array<Handler>;
@@ -13,13 +13,13 @@ type WildCardEventHandlerList = Array<WildcardHandler>;
 type EventHandlerMap = Map<EventType, EventHandlerList | WildCardEventHandlerList>;
 
 export interface Emitter {
-	on<T = any>(type: EventType, handler: Handler<T>): void;
+	on(type: EventType, handler: Handler): void;
 	on(type: "*", handler: WildcardHandler): void;
 
 	off(type: EventType, handler: Handler): void;
 	off(type: "*", handler: WildcardHandler): void;
 
-	emit(type: EventType, event?: any): void;
+	emit<T = any>(type: EventType, event?: T): void;
 	emit(type: "*", event?: any): void;
 }
 
@@ -34,7 +34,7 @@ export default function mitt(all: EventHandlerMap): Emitter {
 		/**
 		 * Register an event handler for the given type.
 		 *
-		 * @param {EventType} type Type of event to listen for, or `"*"` for all events
+		 * @param {string|symbol} type Type of event to listen for, or `"*"` for all events
 		 * @param {Function} handler Function to call in response to given event
 		 * @memberOf mitt
 		 */
@@ -47,7 +47,7 @@ export default function mitt(all: EventHandlerMap): Emitter {
 		/**
 		 * Remove an event handler for the given type.
 		 *
-		 * @param {EventType} type Type of event to unregister `handler` from, or `"*"`
+		 * @param {string|symbol} type Type of event to unregister `handler` from, or `"*"`
 		 * @param {Function} handler Handler function to remove
 		 * @memberOf mitt
 		 */
@@ -63,7 +63,7 @@ export default function mitt(all: EventHandlerMap): Emitter {
 		 *
 		 * Note: Manually firing "*" handlers is not supported.
 		 *
-		 * @param {EventType} type The event type to invoke
+		 * @param {string|symbol} type The event type to invoke
 		 * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
 		 * @memberOf mitt
 		 */

@@ -58,6 +58,13 @@ describe('mitt#', () => {
 			expect(events.has('bar')).to.equal(false);
 			expect(events.get('baz:baT!')).to.deep.equal([foo]);
 		});
+
+		it('can take symbols for event types', () => {
+			const foo = () => {};
+			const eventType = Symbol('eventType');
+			inst.on(eventType, foo);
+			expect(events.get(eventType)).to.deep.equal([foo]);
+		});
 	});
 
 	describe('off()', () => {
