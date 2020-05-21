@@ -7,6 +7,7 @@
   "module": "dist/mitt.es.js",
   "main": "dist/mitt.js",
   "umd:main": "dist/mitt.umd.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "bump": "standard-version",
     "testonly": "mocha --require esm --require ts-node/register test/**/*.js",
@@ -32,8 +33,7 @@
   "license": "MIT",
   "files": [
     "src",
-    "dist",
-    "mitt.d.ts"
+    "dist"
   ],
   "eslintConfig": {
     "extends": [
@@ -63,7 +63,6 @@
       "@typescript-eslint/no-empty-function": 0
     }
   },
-  "typings": "dist/index.d.ts",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
