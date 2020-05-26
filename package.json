@@ -5,11 +5,11 @@
   "jsnext:main": "dist/mitt.es.js",
   "source": "src/index.ts",
   "module": "dist/mitt.es.js",
+  "esmodules": "dist/mitt.modern.js",
   "main": "dist/mitt.js",
   "umd:main": "dist/mitt.umd.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "bump": "standard-version",
     "testonly": "mocha --require esm --require ts-node/register test/**/*.js",
     "lint": "eslint src test --ext ts --ext js",
     "test": "tsc src/index.ts --noEmit && npm run lint && npm run testonly",
@@ -17,7 +17,7 @@
     "build": "npm-run-all --silent clean -p bundle -s docs",
     "clean": "rimraf dist",
     "docs": "documentation readme src/index.ts --section API -q --parse-extension ts",
-    "release": "npm run build -s && npm run bump && git push --follow-tags origin master && npm publish"
+    "release": "npm run -s build -s && npm t && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "repository": "developit/mitt",
   "keywords": [
@@ -75,7 +75,6 @@
     "rimraf": "^2.5.2",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
-    "standard-version": "^4.0.0",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.3"
   }
