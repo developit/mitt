@@ -65,6 +65,15 @@ describe('mitt#', () => {
 			inst.on(eventType, foo);
 			expect(events.get(eventType)).to.deep.equal([foo]);
 		});
+
+		// Adding the same listener multiple times should register it multiple times.
+		// See https://nodejs.org/api/events.html#events_emitter_on_eventname_listener
+		it('should add duplicate listeners', () => {
+			const foo = () => {};
+			inst.on('foo', foo);
+			inst.on('foo', foo);
+			expect(events.get('foo')).to.deep.equal([foo, foo]);
+		});
 	});
 
 	describe('off()', () => {
@@ -97,6 +106,16 @@ describe('mitt#', () => {
 			expect(events.get('Bar')).to.be.empty;
 			expect(events.has('bar')).to.equal(false);
 			expect(events.get('baz:bat!')).to.have.lengthOf(1);
+		});
+
+		it('should remove only the first matching listener', () => {
+			const foo = () => {};
+			inst.on('foo', foo);
+			inst.on('foo', foo);
+			inst.off('foo', foo);
+			expect(events.get('foo')).to.deep.equal([foo]);
+			inst.off('foo', foo);
+			expect(events.get('foo')).to.deep.equal([]);
 		});
 	});
 
