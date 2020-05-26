@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://i.imgur.com/BqsX9NT.png" width="300" height="300" alt="mitt">
   <br>
-  <a href="https://www.npmjs.org/package/mitt"><img src="https://img.shields.io/npm/v/mitt.svg?style=flat" alt="npm"></a> <a href="https://travis-ci.org/developit/mitt"><img src="https://travis-ci.org/developit/mitt.svg?branch=master" alt="travis"></a> <a href="https://david-dm.org/developit/mitt"><img src="https://david-dm.org/developit/mitt/status.svg" alt="dependencies Status"></a> <a href="https://unpkg.com/mitt/dist/mitt.umd.js"><img src="http://img.badgesize.io/https://unpkg.com/mitt/dist/mitt.js?compression=gzip" alt="gzip size"></a>
+  <a href="https://www.npmjs.org/package/mitt"><img src="https://img.shields.io/npm/v/mitt.svg?style=flat" alt="npm"></a> <a href="https://travis-ci.org/developit/mitt"><img src="https://travis-ci.org/developit/mitt.svg?branch=master" alt="travis"></a> <a href="https://unpkg.com/mitt/dist/mitt.umd.js"><img src="http://img.badgesize.io/https://unpkg.com/mitt/dist/mitt.js?compression=gzip" alt="gzip size"></a>
   
 </p>
 
