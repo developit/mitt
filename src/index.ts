@@ -27,21 +27,22 @@ export interface Emitter {
  *  @name mitt
  *  @returns {Mitt}
  */
-export default function mitt(all: EventHandlerMap): Emitter {
+export default function mitt(all?: EventHandlerMap): Emitter {
 	all = all || new Map();
 
 	return {
 		/**
 		 * Register an event handler for the given type.
-		 *
 		 * @param {string|symbol} type Type of event to listen for, or `"*"` for all events
 		 * @param {Function} handler Function to call in response to given event
 		 * @memberOf mitt
 		 */
 		on(type: EventType, handler: Handler) {
-			const handlers = all.get(type) || [];
-			handlers.push(handler);
-			all.set(type, handlers);
+			const handlers = all.get(type);
+			const added = handlers && handlers.push(handler);
+			if (!added) {
+				all.set(type, [handler]);
+			}
 		},
 
 		/**
@@ -52,9 +53,9 @@ export default function mitt(all: EventHandlerMap): Emitter {
 		 * @memberOf mitt
 		 */
 		off(type: EventType, handler: Handler) {
-			const list = all.get(type);
-			if (list) {
-				list.splice(list.indexOf(handler) >>> 0, 1);
+			const handlers = all.get(type);
+			if (handlers) {
+				handlers.splice(handlers.indexOf(handler) >>> 0, 1);
 			}
 		},
 
