@@ -159,7 +159,7 @@ describe('mitt#', () => {
 
 			inst.emit('foo', ea);
 			expect(star).to.have.been.calledOnce.and.calledWith('foo', ea);
-			star.reset();
+			star.resetHistory();
 
 			inst.emit('bar', eb);
 			expect(star).to.have.been.calledOnce.and.calledWith('bar', eb);
