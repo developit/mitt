@@ -39,7 +39,7 @@ export default function mitt(all: EventHandlerMap): Emitter {
 		 * @memberOf mitt
 		 */
 		on(type: EventType, handler: Handler) {
-			const handlers = (all.get(type) || []);
+			const handlers = all.get(type) || [];
 			handlers.push(handler);
 			all.set(type, handlers);
 		},
@@ -52,8 +52,9 @@ export default function mitt(all: EventHandlerMap): Emitter {
 		 * @memberOf mitt
 		 */
 		off(type: EventType, handler: Handler) {
-			if (all.has(type)) {
-				all.get(type).splice(all.get(type).indexOf(handler) >>> 0, 1);
+			const list = all.get(type);
+			if (list) {
+				list.splice(list.indexOf(handler) >>> 0, 1);
 			}
 		},
 
