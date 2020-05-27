@@ -36,7 +36,7 @@
   ],
   "eslintConfig": {
     "extends": [
-      "eslint:recommended",
+      "developit",
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended"
     ],
@@ -73,6 +73,7 @@
     "chai": "^4.2.0",
     "documentation": "^13.0.0",
     "eslint": "^7.1.0",
+    "eslint-config-developit": "^1.2.0",
     "esm": "^3.2.25",
     "microbundle": "^0.12.0",
     "mocha": "^7.2.0",
