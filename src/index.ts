@@ -1,16 +1,16 @@
-type EventType = string | symbol;
+export type EventType = string | symbol;
 
 // An event handler can take an optional event argument
 // and should not return a value
-type Handler = (event?: any) => void;
-type WildcardHandler= (type: EventType, event?: any) => void
+export type Handler = (event?: any) => void;
+export type WildcardHandler= (type: EventType, event?: any) => void
 
 // An array of all currently registered event handlers for a type
-type EventHandlerList = Array<Handler>;
-type WildCardEventHandlerList = Array<WildcardHandler>;
+export type EventHandlerList = Array<Handler>;
+export type WildCardEventHandlerList = Array<WildcardHandler>;
 
 // A map of event types and their corresponding event handlers.
-type EventHandlerMap = Map<EventType, EventHandlerList | WildCardEventHandlerList>;
+export type EventHandlerMap = Map<EventType, EventHandlerList | WildCardEventHandlerList>;
 
 export interface Emitter {
 	on(type: EventType, handler: Handler): void;
