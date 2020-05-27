@@ -10,9 +10,10 @@
   "umd:main": "dist/mitt.umd.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "testonly": "mocha --require esm --require ts-node/register test/**/*.js",
+    "test": "npm-run-all --silent typecheck lint testonly",
+    "testonly": "mocha --require esm test/**/*.js",
     "lint": "eslint src test --ext ts --ext js",
-    "test": "tsc src/index.ts --noEmit && npm run lint && npm run testonly",
+    "typecheck": "tsc **/*.ts --noEmit",
     "bundle": "microbundle",
     "build": "npm-run-all --silent clean -p bundle -s docs",
     "clean": "rimraf dist",
@@ -23,6 +24,7 @@
   "keywords": [
     "events",
     "eventemitter",
+    "emitter",
     "pubsub"
   ],
   "homepage": "https://github.com/developit/mitt",
@@ -47,6 +49,7 @@
     "env": {
       "browser": true,
       "mocha": true,
+      "jest": false,
       "es6": true
     },
     "globals": {
@@ -57,12 +60,16 @@
         2,
         "always"
       ],
+      "jest/valid-expect": 0,
       "@typescript-eslint/no-explicit-any": 0,
       "@typescript-eslint/explicit-function-return-type": 0,
       "@typescript-eslint/explicit-module-boundary-types": 0,
       "@typescript-eslint/no-empty-function": 0
     }
   },
+  "eslintIgnore": [
+    "dist"
+  ],
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",

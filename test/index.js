@@ -1,11 +1,25 @@
-import mitt from '../src';
+import mitt from '..';
 import chai, { expect } from 'chai';
 import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
-it('should default export be a function', () => {
-	expect(mitt).to.be.a('function');
+describe('mitt', () => {
+	it('should default export be a function', () => {
+		expect(mitt).to.be.a('function');
+	});
+
+	it('should accept an optional event handler map', () => {
+		expect(() => mitt(new Map())).not.to.throw;
+		const map = new Map();
+		const a = spy();
+		const b = spy();
+		map.set('foo', [a, b]);
+		const events = mitt(map);
+		events.emit('foo');
+		expect(a).to.have.been.calledOnce;
+		expect(b).to.have.been.calledOnce;
+	});
 });
 
 describe('mitt#', () => {
