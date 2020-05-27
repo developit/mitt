@@ -14,13 +14,13 @@ type EventHandlerMap = Map<EventType, EventHandlerList | WildCardEventHandlerLis
 
 export interface Emitter {
 	on(type: EventType, handler: Handler): void;
-	on(type: "*", handler: WildcardHandler): void;
+	on(type: '*', handler: WildcardHandler): void;
 
 	off(type: EventType, handler: Handler): void;
-	off(type: "*", handler: WildcardHandler): void;
+	off(type: '*', handler: WildcardHandler): void;
 
 	emit<T = any>(type: EventType, event?: T): void;
-	emit(type: "*", event?: any): void;
+	emit(type: '*', event?: any): void;
 }
 
 /** Mitt: Tiny (~200b) functional event emitter / pubsub.
@@ -31,6 +31,7 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 	all = all || new Map();
 
 	return {
+
 		/**
 		 * Register an event handler for the given type.
 		 * @param {string|symbol} type Type of event to listen for, or `"*"` for all events
