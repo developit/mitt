@@ -1,6 +1,6 @@
 {
   "name": "mitt",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Tiny 200b functional Event Emitter / pubsub.",
   "jsnext:main": "dist/mitt.es.js",
   "source": "src/index.ts",
