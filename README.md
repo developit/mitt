@@ -69,6 +69,9 @@ emitter.on('*', (type, e) => console.log(type, e) )
 // fire an event
 emitter.emit('foo', { a: 'b' })
 
+// clearing all events
+emitter.all.clear()
+
 // working with handler references:
 function onFoo() {}
 emitter.on('foo', onFoo)   // listen
@@ -99,11 +102,13 @@ const emitter: mitt.Emitter = mitt();
 #### Table of Contents
 
 -   [mitt](#mitt)
--   [on](#on)
-    -   [Parameters](#parameters)
--   [off](#off)
-    -   [Parameters](#parameters-1)
 -   [emit](#emit)
+    -   [Properties](#properties)
+-   [emit](#emit-1)
+    -   [Parameters](#parameters)
+-   [on](#on)
+    -   [Parameters](#parameters-1)
+-   [off](#off)
     -   [Parameters](#parameters-2)
 
 ### mitt
@@ -111,6 +116,24 @@ const emitter: mitt.Emitter = mitt();
 Mitt: Tiny (~200b) functional event emitter / pubsub.
 
 Returns **Mitt** 
+
+### emit
+
+#### Properties
+
+-   `all` **EventHandlerMap** Contains all registered event handlers.
+
+### emit
+
+Invoke all handlers for the given type.
+If present, `"*"` handlers are invoked after type-matched handlers.
+
+Note: Manually firing "\*" handlers is not supported.
+
+#### Parameters
+
+-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** The event type to invoke
+-   `evt` **Any?** Any value (object is recommended and powerful), passed to each handler
 
 ### on
 
@@ -129,18 +152,6 @@ Remove an event handler for the given type.
 
 -   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to unregister `handler` from, or `"*"`
 -   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Handler function to remove
-
-### emit
-
-Invoke all handlers for the given type.
-If present, `"*"` handlers are invoked after type-matched handlers.
-
-Note: Manually firing "\*" handlers is not supported.
-
-#### Parameters
-
--   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** The event type to invoke
--   `evt` **Any?** Any value (object is recommended and powerful), passed to each handler
 
 ## Contribute
 

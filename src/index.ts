@@ -13,6 +13,8 @@ export type WildCardEventHandlerList = Array<WildcardHandler>;
 export type EventHandlerMap = Map<EventType, EventHandlerList | WildCardEventHandlerList>;
 
 export interface Emitter {
+	all: EventHandlerMap;
+
 	on(type: EventType, handler: Handler): void;
 	on(type: '*', handler: WildcardHandler): void;
 
@@ -30,7 +32,12 @@ export interface Emitter {
 export default function mitt(all?: EventHandlerMap): Emitter {
 	all = all || new Map();
 
+	/**
+	 * @property {EventHandlerMap} all Contains all registered event handlers.
+	 */
 	return {
+
+		all,
 
 		/**
 		 * Register an event handler for the given type.

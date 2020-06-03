@@ -30,6 +30,14 @@ describe('mitt#', () => {
 		inst = mitt(events);
 	});
 
+	describe('properties', () => {
+		it('should expose the event handler map', () => {
+			expect(inst)
+				.to.have.property('all')
+				.that.is.a('map');
+		});
+	});
+
 	describe('on()', () => {
 		it('should be a function', () => {
 			expect(inst)
