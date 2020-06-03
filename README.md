@@ -105,6 +105,7 @@ const emitter: mitt.Emitter = mitt();
     -   [Parameters](#parameters-1)
 -   [emit](#emit)
     -   [Parameters](#parameters-2)
+-   [clear](#clear)
 
 ### mitt
 
@@ -141,6 +142,12 @@ Note: Manually firing "\*" handlers is not supported.
 
 -   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** The event type to invoke
 -   `evt` **Any?** Any value (object is recommended and powerful), passed to each handler
+
+### clear
+
+Remove all event handlers.
+
+Note: This will also remove event handlers passed via `mitt(all: EventHandlerMap)`.
 
 ## Contribute
 

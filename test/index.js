@@ -179,4 +179,22 @@ describe('mitt#', () => {
 			expect(star).to.have.been.calledOnce.and.calledWith('bar', eb);
 		});
 	});
+
+	describe('clear()', () => {
+		it('should be a function', () => {
+			expect(inst)
+				.to.have.property('clear')
+				.that.is.a('function');
+		});
+
+		it('should remove existing handlers', () => {
+			const foo = () => {};
+			const bar = () => {};
+			inst.on('foo', foo);
+			inst.on('bar', bar);
+			inst.clear();
+			expect(events.get('foo')).to.be.undefined;
+			expect(events.size).to.equal(0);
+		});
+	});
 });

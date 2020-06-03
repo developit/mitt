@@ -21,6 +21,8 @@ export interface Emitter {
 
 	emit<T = any>(type: EventType, event?: T): void;
 	emit(type: '*', event?: any): void;
+
+	clear(): void;
 }
 
 /** Mitt: Tiny (~200b) functional event emitter / pubsub.
@@ -73,6 +75,15 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 		emit(type: EventType, evt: any) {
 			((all.get(type) || []) as EventHandlerList).slice().map((handler) => { handler(evt); });
 			((all.get('*') || []) as WildCardEventHandlerList).slice().map((handler) => { handler(type, evt); });
+		},
+
+		/**
+		 * Remove all event handlers.
+		 *
+		 * Note: This will also remove event handlers passed via `mitt(all: EventHandlerMap)`.
+		 */
+		clear() {
+			all.clear();
 		}
 	};
 }
