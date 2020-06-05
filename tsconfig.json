@@ -1,0 +1,11 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"noEmit": true,
+		"declaration": true,
+		"moduleResolution": "node"
+	},
+	"exclude": [
+		"test"
+	]
+}
