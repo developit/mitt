@@ -1,8 +1,8 @@
-export type EventType = string | symbol;
+export type EventType = string | number | symbol;
 
 // An event handler can take an optional event argument
 // and should not return a value
-export type Handler = (event?: any) => void;
+export type Handler<T = any> = (event?: T) => void;
 export type WildcardHandler= (type: EventType, event?: any) => void
 
 // An array of all currently registered event handlers for a type
@@ -12,14 +12,14 @@ export type WildCardEventHandlerList = Array<WildcardHandler>;
 // A map of event types and their corresponding event handlers.
 export type EventHandlerMap = Map<EventType, EventHandlerList | WildCardEventHandlerList>;
 
-export interface Emitter {
-	on(type: EventType, handler: Handler): void;
+export interface Emitter<T = any> {
+	on<K extends keyof T>(type: K, handler: Handler<T[K]>): void;
 	on(type: '*', handler: WildcardHandler): void;
 
-	off(type: EventType, handler: Handler): void;
+	off<K extends keyof T>(type: K, handler: Handler<T[K]>): void;
 	off(type: '*', handler: WildcardHandler): void;
 
-	emit<T = any>(type: EventType, event?: T): void;
+	emit<K extends keyof T>(type: EventType, event?: T[K]): void;
 	emit(type: '*', event?: any): void;
 }
 
@@ -27,7 +27,7 @@ export interface Emitter {
  *  @name mitt
  *  @returns {Mitt}
  */
-export default function mitt(all?: EventHandlerMap): Emitter {
+export default function mitt<T = any>(all?: EventHandlerMap): Emitter<T> {
 	all = all || new Map();
 
 	return {

@@ -82,11 +82,10 @@ import mitt from 'mitt';
 const emitter: mitt.Emitter = mitt();
 
 // Optional: Event typings can be provided as well
-declare module 'mitt' {
-  interface EventTypes {
-    foo: { bar: string }
-  }
+interface EventTypes {
+  foo: { bar: string }
 }
+const emitter = mitt<EventTypes>()
 ```
 
 ## Examples & Demos
