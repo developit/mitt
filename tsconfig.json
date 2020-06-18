@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"noEmit": true,
 		"declaration": true,
-		"moduleResolution": "node"
+		"moduleResolution": "node",
+		"esModuleInterop": true
 	},
 	"exclude": [
 		"test"
