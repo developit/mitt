@@ -27,9 +27,7 @@ export interface Emitter {
  *  @name mitt
  *  @returns {Mitt}
  */
-export default function mitt(all?: EventHandlerMap): Emitter {
-	all = all || new Map();
-
+export default function mitt(all: EventHandlerMap = new Map()): Emitter {
 	return {
 
 		/**
@@ -71,8 +69,8 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 		 * @memberOf mitt
 		 */
 		emit(type: EventType, evt: any) {
-			((all.get(type) || []) as EventHandlerList).slice().map((handler) => { handler(evt); });
-			((all.get('*') || []) as WildCardEventHandlerList).slice().map((handler) => { handler(type, evt); });
+			((all.get(type) || []) as EventHandlerList).forEach((handler) => { handler(evt); });
+			((all.get('*') || []) as WildCardEventHandlerList).forEach((handler) => { handler(type, evt); });
 		}
 	};
 }
