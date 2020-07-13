@@ -11,10 +11,10 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "test": "npm-run-all --silent typecheck lint mocha test-types",
-    "mocha": "mocha --require esm test/**/*.js",
+    "mocha": "mocha test",
     "test-types": "tsc test/test-types-compilation.ts --noEmit",
     "lint": "eslint src test --ext ts --ext js",
-    "typecheck": "tsc **/*.ts --noEmit",
+    "typecheck": "tsc --noEmit",
     "bundle": "microbundle",
     "build": "npm-run-all --silent clean -p bundle -s docs",
     "clean": "rimraf dist",
@@ -37,6 +37,14 @@
     "src",
     "dist"
   ],
+  "mocha": {
+    "extension": ["ts"],
+    "require": [
+      "ts-node/register",
+      "esm"
+    ],
+    "spec": ["test/*_test.ts"]
+  },
   "eslintConfig": {
     "extends": [
       "developit",

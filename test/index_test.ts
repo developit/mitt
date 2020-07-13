@@ -143,7 +143,7 @@ describe('mitt#', () => {
 		it('should invoke handler for type', () => {
 			const event = { a: 'b' };
 
-			inst.on('foo', (one, two) => {
+			inst.on('foo', (one, two?) => {
 				expect(one).to.deep.equal(event);
 				expect(two).to.be.an('undefined');
 			});
