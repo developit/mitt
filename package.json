@@ -8,7 +8,7 @@
   "esmodules": "dist/mitt.modern.js",
   "main": "dist/mitt.js",
   "umd:main": "dist/mitt.umd.js",
-  "typings": "dist/index.d.ts",
+  "typings": "index.d.ts",
   "scripts": {
     "test": "npm-run-all --silent typecheck lint mocha test-types",
     "mocha": "mocha test",
@@ -35,15 +35,20 @@
   "license": "MIT",
   "files": [
     "src",
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "mocha": {
-    "extension": ["ts"],
+    "extension": [
+      "ts"
+    ],
     "require": [
       "ts-node/register",
       "esm"
     ],
-    "spec": ["test/*_test.ts"]
+    "spec": [
+      "test/*_test.ts"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -77,7 +82,8 @@
     }
   },
   "eslintIgnore": [
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "devDependencies": {
     "@types/chai": "^4.2.11",
@@ -91,7 +97,7 @@
     "eslint": "^7.1.0",
     "eslint-config-developit": "^1.2.0",
     "esm": "^3.2.25",
-    "microbundle": "^0.12.0",
+    "microbundle": "^0.12.3",
     "mocha": "^8.0.1",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2",

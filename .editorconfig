@@ -10,6 +10,7 @@ insert_final_newline = true
 [{package.json,.*rc,*.yml}]
 indent_style = space
 indent_size = 2
+insert_final_newline = false
 
 [*.md]
 trim_trailing_whitespace = false
