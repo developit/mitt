@@ -1,4 +1,4 @@
-import mitt from '..';
+import mitt, { Emitter } from '..';
 import chai, { expect } from 'chai';
 import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -23,7 +23,7 @@ describe('mitt', () => {
 });
 
 describe('mitt#', () => {
-	let events, inst;
+	let events, inst: Emitter;
 
 	beforeEach( () => {
 		events = new Map();
@@ -143,7 +143,7 @@ describe('mitt#', () => {
 		it('should invoke handler for type', () => {
 			const event = { a: 'b' };
 
-			inst.on('foo', (one, two) => {
+			inst.on('foo', (one, two?) => {
 				expect(one).to.deep.equal(event);
 				expect(two).to.be.an('undefined');
 			});
