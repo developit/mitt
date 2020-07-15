@@ -13,6 +13,8 @@ export type WildCardEventHandlerList = Array<WildcardHandler>;
 export type EventHandlerMap = Map<EventType, EventHandlerList | WildCardEventHandlerList>;
 
 export interface Emitter {
+	all: EventHandlerMap;
+
 	on<T = any>(type: EventType, handler: Handler<T>): void;
 	on(type: '*', handler: WildcardHandler): void;
 
@@ -23,14 +25,20 @@ export interface Emitter {
 	emit(type: '*', event?: any): void;
 }
 
-/** Mitt: Tiny (~200b) functional event emitter / pubsub.
- *  @name mitt
- *  @returns {Mitt}
+/**
+ * Mitt: Tiny (~200b) functional event emitter / pubsub.
+ * @name mitt
+ * @returns {Mitt}
  */
 export default function mitt(all?: EventHandlerMap): Emitter {
 	all = all || new Map();
 
 	return {
+
+		/**
+		 * A Map of event names to registered handler functions.
+		 */
+		all,
 
 		/**
 		 * Register an event handler for the given type.
@@ -48,7 +56,6 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 
 		/**
 		 * Remove an event handler for the given type.
-		 *
 		 * @param {string|symbol} type Type of event to unregister `handler` from, or `"*"`
 		 * @param {Function} handler Handler function to remove
 		 * @memberOf mitt
