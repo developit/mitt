@@ -1,6 +1,6 @@
 {
   "name": "mitt",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Tiny 200b functional Event Emitter / pubsub.",
   "jsnext:main": "dist/mitt.es.js",
   "source": "src/index.ts",
@@ -19,7 +19,7 @@
     "build": "npm-run-all --silent clean -p bundle -s docs",
     "clean": "rimraf dist",
     "docs": "documentation readme src/index.ts --section API -q --parse-extension ts",
-    "release": "npm run -s build -s && npm t && git commit -m $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
+    "release": "npm run -s build -s && npm t && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "repository": "developit/mitt",
   "keywords": [
