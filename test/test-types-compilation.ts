@@ -13,7 +13,7 @@ const emitter = mitt<{
 }>();
 
 const barHandler = (x?: number) => {};
-const fooHandler = (x?: string) => {};
+const fooHandler = (x: string) => {};
 const wildcardHandler = (
 	_type: 'foo' | 'bar' | 'someEvent',
 	_event: string | SomeEventData | number | undefined

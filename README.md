@@ -122,7 +122,7 @@ const emitter: mitt.Emitter<Events> = mitt<Events>();
 
 Mitt: Tiny (~200b) functional event emitter / pubsub.
 
-Returns **Mitt**
+Returns **Mitt** 
 
 ### all
 
