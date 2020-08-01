@@ -80,9 +80,17 @@ emitter.off('foo', onFoo)  // unlisten
 
 ### Typescript
 
+Set `"strict": true` in your tsconfig.json to get improved type inferrence for `mitt` instance methods.
+
 ```ts
 import mitt from 'mitt';
-const emitter: mitt.Emitter = mitt();
+
+type Events = {
+  foo: string
+  bar?: number
+}
+
+const emitter: mitt.Emitter<Events> = mitt<Events>();
 ```
 
 ## Examples & Demos
@@ -114,7 +122,7 @@ const emitter: mitt.Emitter = mitt();
 
 Mitt: Tiny (~200b) functional event emitter / pubsub.
 
-Returns **Mitt** 
+Returns **Mitt**
 
 ### all
 
@@ -126,7 +134,7 @@ Register an event handler for the given type.
 
 #### Parameters
 
--   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to listen for, or `"*"` for all events
+-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to listen for, or `'*'` for all events
 -   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function to call in response to given event
 
 ### off
@@ -135,15 +143,15 @@ Remove an event handler for the given type.
 
 #### Parameters
 
--   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to unregister `handler` from, or `"*"`
+-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to unregister `handler` from, or `'*'`
 -   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Handler function to remove
 
 ### emit
 
 Invoke all handlers for the given type.
-If present, `"*"` handlers are invoked after type-matched handlers.
+If present, `'*'` handlers are invoked after type-matched handlers.
 
-Note: Manually firing "\*" handlers is not supported.
+Note: Manually firing '\*' handlers is not supported.
 
 #### Parameters
 
