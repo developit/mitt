@@ -80,7 +80,7 @@ emitter.off('foo', onFoo)  // unlisten
 
 ### Typescript
 
-Set `"strict": true` in your tsconfig.json to get improved type inferrence for `mitt` instance methods.
+Set `"strict": true` in your tsconfig.json to get improved type inference for `mitt` instance methods.
 
 ```ts
 import mitt from 'mitt';
@@ -122,7 +122,7 @@ const emitter: mitt.Emitter<Events> = mitt<Events>();
 
 Mitt: Tiny (~200b) functional event emitter / pubsub.
 
-Returns **Mitt** 
+Returns **Mitt**
 
 ### all
 
