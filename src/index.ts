@@ -1,4 +1,4 @@
-import { Union } from 'ts-toolbelt';
+import { Union, B } from 'ts-toolbelt';
 
 export type EventType = string | symbol;
 
@@ -31,7 +31,7 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
 
 	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
 	emit<Key extends keyof Events>(
-		type: Union.Has<Events[Key], undefined> extends 1 ? Key : never
+		type: Union.Has<Events[Key], undefined> extends B.True ? Key : never
 	): void;
 }
 
