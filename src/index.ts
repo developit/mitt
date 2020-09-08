@@ -1,5 +1,3 @@
-import { Union, B } from 'ts-toolbelt';
-
 export type EventType = string | symbol;
 
 // An event handler can take an optional event argument
@@ -30,9 +28,7 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
 	off(type: '*', handler: WildcardHandler<Events>): void;
 
 	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
-	emit<Key extends keyof Events>(
-		type: Union.Has<Events[Key], undefined> extends B.True ? Key : never
-	): void;
+	emit<Key extends keyof Events>(type: undefined extends Events[Key] ? Key : never): void;
 }
 
 /**
