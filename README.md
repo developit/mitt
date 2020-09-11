@@ -81,8 +81,8 @@ emitter.off('foo', onFoo)  // unlisten
 ### Typescript
 
 ```ts
-import mitt from 'mitt';
-const emitter: mitt.Emitter = mitt();
+import mitt, { Emitter } from 'mitt';
+const emitter: Emitter = mitt();
 ```
 
 ## Examples & Demos
