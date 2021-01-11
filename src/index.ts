@@ -77,9 +77,9 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 		 * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
 		 * @memberOf mitt
 		 */
-		emit<T = any>(type: EventType, evt: T) {
-			((all.get(type) || []) as EventHandlerList).slice().map((handler) => { handler(evt); });
-			((all.get('*') || []) as WildCardEventHandlerList).slice().map((handler) => { handler(type, evt); });
+		emit<T = any>(type: EventType, ...evt: T[]) {
+			((all.get(type) || []) as EventHandlerList).slice().map((handler) => { handler(...evt); });
+			((all.get('*') || []) as WildCardEventHandlerList).slice().map((handler) => { handler(type, ...evt); });
 		}
 	};
 }
