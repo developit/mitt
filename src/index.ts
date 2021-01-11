@@ -56,6 +56,7 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 
 		/**
 		 * Remove an event handler for the given type.
+		 * If omit the `handler`, all event handlers of the given type are deleted.
 		 * @param {string|symbol} type Type of event to unregister `handler` from, or `"*"`
 		 * @param {Function} handler Handler function to remove
 		 * @memberOf mitt
@@ -63,11 +64,12 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 		off<T = any>(type: EventType, handler?: Handler<T>) {
 			const handlers = all.get(type);
 			if (handlers) {
-		            if(handler){
-				handlers.splice(handlers.indexOf(handler) >>> 0, 1);
-		            } else {
-		                all.delete(type);
-		            }
+				if (handler) {
+					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
+				}
+				else {
+					all.delete(type);
+				}
 			}
 		},
 

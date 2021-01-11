@@ -132,6 +132,7 @@ Register an event handler for the given type.
 ### off
 
 Remove an event handler for the given type.
+If omit the `handler`, all event handlers of the given type are deleted.
 
 #### Parameters
 
