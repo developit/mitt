@@ -31,14 +31,14 @@ export interface Emitter {
  * @returns {Mitt}
  */
 export default function mitt(all?: EventHandlerMap): Emitter {
-	all = all || new Map();
+	const allEvents = all || new Map();
 
 	return {
 
 		/**
 		 * A Map of event names to registered handler functions.
 		 */
-		all,
+		all: allEvents,
 
 		/**
 		 * Register an event handler for the given type.
@@ -47,10 +47,10 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 		 * @memberOf mitt
 		 */
 		on<T = any>(type: EventType, handler: Handler<T>) {
-			const handlers = all.get(type);
+			const handlers = allEvents.get(type);
 			const added = handlers && handlers.push(handler);
 			if (!added) {
-				all.set(type, [handler]);
+				allEvents.set(type, [handler]);
 			}
 		},
 
@@ -61,7 +61,7 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 		 * @memberOf mitt
 		 */
 		off<T = any>(type: EventType, handler: Handler<T>) {
-			const handlers = all.get(type);
+			const handlers = allEvents.get(type);
 			if (handlers) {
 				handlers.splice(handlers.indexOf(handler) >>> 0, 1);
 			}
@@ -78,8 +78,8 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 		 * @memberOf mitt
 		 */
 		emit<T = any>(type: EventType, evt: T) {
-			((all.get(type) || []) as EventHandlerList).slice().map((handler) => { handler(evt); });
-			((all.get('*') || []) as WildCardEventHandlerList).slice().map((handler) => { handler(type, evt); });
+			((allEvents.get(type) || []) as EventHandlerList).slice().map((handler) => { handler(evt); });
+			((allEvents.get('*') || []) as WildCardEventHandlerList).slice().map((handler) => { handler(type, evt); });
 		}
 	};
 }
