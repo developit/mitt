@@ -18,7 +18,7 @@ export interface Emitter {
 	on<T = any>(type: EventType, handler: Handler<T>): void;
 	on(type: '*', handler: WildcardHandler): void;
 
-	off<T = any>(type: EventType, handler: Handler<T>): void;
+	off<T = any>(type: EventType, handler?: Handler<T>): void;
 	off(type: '*', handler: WildcardHandler): void;
 
 	emit<T = any>(type: EventType, event?: T): void;
@@ -63,7 +63,12 @@ export default function mitt(all?: EventHandlerMap): Emitter {
 		off<T = any>(type: EventType, handler: Handler<T>) {
 			const handlers = all.get(type);
 			if (handlers) {
-				handlers.splice(handlers.indexOf(handler) >>> 0, 1);
+				if (!handler) {
+					handlers.splice(0, handlers.length);
+				}
+				else {
+					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
+				}
 			}
 		},
 
