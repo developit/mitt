@@ -89,16 +89,23 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		 * @memberOf mitt
 		 */
 		emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
-			((all!.get(type) || []) as EventHandlerList<Events[keyof Events]>)
-				.slice()
-				.map((handler) => {
-					handler(evt!);
-				});
-			((all!.get('*') || []) as WildCardEventHandlerList<Events>)
-				.slice()
-				.map((handler) => {
-					handler(type, evt!);
-				});
+			let handlers = all!.get(type);
+			if (handlers) {
+				(handlers as EventHandlerList<Events[keyof Events]>)
+					.slice()
+					.map((handler) => {
+						handler(evt!);
+					});
+			}
+
+			handlers = all!.get('*');
+			if (handlers) {
+				(handlers as WildCardEventHandlerList<Events>)
+					.slice()
+					.map((handler) => {
+						handler(type, evt!);
+					});
+			}
 		}
 	};
 }
