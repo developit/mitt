@@ -59,8 +59,10 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		 */
 		on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
 			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
-			const added = handlers && handlers.push(handler);
-			if (!added) {
+			if (handlers) {
+				handlers.push(handler);
+			}
+			else {
 				all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>);
 			}
 		},
@@ -79,7 +81,7 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
 				}
 				else {
-					all.delete(type);
+					all!.set(type, []);
 				}
 			}
 		},

@@ -140,12 +140,12 @@ Register an event handler for the given type.
 ### off
 
 Remove an event handler for the given type.
-If omit the `handler`, all event handlers of the given type are deleted.
+If `handler` is omitted, all handlers of the given type are removed.
 
 #### Parameters
 
 -   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to unregister `handler` from, or `'*'`
--   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Handler function to remove
+-   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Handler function to remove
 
 ### emit
 
