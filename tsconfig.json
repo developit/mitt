@@ -1,13 +1,11 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
+		"strict": true,
 		"noEmit": true,
 		"declaration": true,
 		"moduleResolution": "node",
 		"esModuleInterop": true
 	},
-	"include": [
-		"src/*.ts",
-		"test/*.ts",
-	]
+	"include": ["src/*.ts", "test/*.ts"]
 }
