@@ -150,6 +150,17 @@ describe('mitt#', () => {
 			inst.off('foo', foo);
 			expect(events.get('foo')).to.deep.equal([]);
 		});
+
+		it('off("type") should remove all handlers of the given type', () => {
+			inst.on('foo', () => {});
+			inst.on('foo', () => {});
+			inst.on('bar', () => {});
+			inst.off('foo');
+			expect(events.get('foo')).to.deep.equal([]);
+			expect(events.get('bar')).to.have.length(1);
+			inst.off('bar');
+			expect(events.get('bar')).to.deep.equal([]);
+		});
 	});
 
 	describe('emit()', () => {
