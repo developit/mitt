@@ -86,11 +86,28 @@ Set `"strict": true` in your tsconfig.json to get improved type inference for `m
 import mitt from 'mitt';
 
 type Events = {
-  foo: string
-  bar?: number
-}
+  foo: string;
+  bar?: number;
+};
 
-const emitter: mitt.Emitter<Events> = mitt<Events>();
+const emitter = mitt<Events>(); // inferred as Emitter<Events>
+
+emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
+
+emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
+```
+
+Alternatively, you can use the provided `Emitter` type:
+
+```ts
+import mitt, { Emitter } from 'mitt';
+
+type Events = {
+  foo: string;
+  bar?: number;
+};
+
+const emitter: Emitter<Events> = mitt<Events>();
 ```
 
 ## Examples & Demos
