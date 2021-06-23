@@ -58,13 +58,14 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		 * @memberOf mitt
 		 */
 		on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
-			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
-			if (handlers) {
-				handlers.push(handler);
+			let handlers: Array<GenericEventHandler> | undefined = all!.get(type);
+			if (!handlers) {
+				all!.set(type, handlers = []);
 			}
-			else {
-				all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>);
-			}
+			handlers.push(handler);
+			return () => {
+				handlers!.splice(handlers!.indexOf(handler) >>> 0, 1);
+			};
 		},
 
 		/**
@@ -75,13 +76,13 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		 * @memberOf mitt
 		 */
 		off<Key extends keyof Events>(type: Key, handler?: GenericEventHandler) {
-			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
+			let handlers: Array<GenericEventHandler> | undefined = all!.get(type);
 			if (handlers) {
 				if (handler) {
 					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
 				}
 				else {
-					all!.set(type, []);
+					all!.set(type, handlers = []);
 				}
 			}
 		},
