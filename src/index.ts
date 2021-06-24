@@ -96,13 +96,13 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		 * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
 		 * @memberOf mitt
 		 */
-		emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
+		emit<Key extends keyof Events>(type: Key, ...evt?: Events[Key]) {
 			let handlers = all!.get(type);
 			if (handlers) {
 				(handlers as EventHandlerList<Events[keyof Events]>)
 					.slice()
 					.map((handler) => {
-						handler(evt!);
+						handler(...evt!);
 					});
 			}
 
@@ -111,7 +111,7 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 				(handlers as WildCardEventHandlerList<Events>)
 					.slice()
 					.map((handler) => {
-						handler(type, evt!);
+						handler(type, ...evt!);
 					});
 			}
 		}
