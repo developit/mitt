@@ -70,7 +70,7 @@ emitter.on('*', (type, e) => console.log(type, e) )
 emitter.emit('foo', { a: 'b' })
 
 // clearing all events
-emitter.all.clear()
+emitter.clear()
 
 // working with handler references:
 function onFoo() {}
@@ -134,6 +134,7 @@ const emitter: Emitter<Events> = mitt<Events>();
     -   [Parameters](#parameters-1)
 -   [emit](#emit)
     -   [Parameters](#parameters-2)
+-  [clear](#clear)
 
 ### mitt
 
@@ -175,6 +176,10 @@ Note: Manually firing '\*' handlers is not supported.
 
 -   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** The event type to invoke
 -   `evt` **Any?** Any value (object is recommended and powerful), passed to each handler
+
+### clear
+
+Clear all event listeners
 
 ## Contribute
 

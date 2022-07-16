@@ -29,6 +29,8 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
 
 	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
 	emit<Key extends keyof Events>(type: undefined extends Events[Key] ? Key : never): void;
+
+	clear(): void;
 }
 
 /**
@@ -114,6 +116,14 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 						handler(type, evt!);
 					});
 			}
+		},
+
+		/**
+		 * Clear all
+		 * @memberOf mitt
+		 */
+		clear() {
+			all?.clear();
 		}
 	};
 }
