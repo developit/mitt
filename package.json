@@ -9,6 +9,7 @@
   "source": "src/index.ts",
   "typings": "index.d.ts",
   "exports": {
+    "types": "./index.d.ts",
     "import": "./dist/mitt.mjs",
     "require": "./dist/mitt.js",
     "default": "./dist/mitt.mjs"
