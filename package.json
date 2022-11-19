@@ -2,6 +2,7 @@
   "name": "mitt",
   "version": "3.0.0",
   "description": "Tiny 200b functional Event Emitter / pubsub.",
+  "type": "module",
   "module": "dist/mitt.mjs",
   "main": "dist/mitt.js",
   "jsnext:main": "dist/mitt.mjs",
