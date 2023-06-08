@@ -1,6 +1,7 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
+		"target": "ESNext",
 		"strict": true,
 		"noEmit": true,
 		"declaration": true,
