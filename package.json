@@ -1,6 +1,6 @@
 {
   "name": "mitt",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Tiny 200b functional Event Emitter / pubsub.",
   "module": "dist/mitt.mjs",
   "main": "dist/mitt.js",
@@ -10,6 +10,7 @@
   "typings": "index.d.ts",
   "exports": {
     "types": "./index.d.ts",
+    "module": "./dist/mitt.mjs",
     "import": "./dist/mitt.mjs",
     "require": "./dist/mitt.js",
     "default": "./dist/mitt.mjs"
@@ -54,61 +55,31 @@
       "test/*_test.ts"
     ]
   },
-  "eslintConfig": {
-    "extends": [
-      "developit",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "sourceType": "module"
-    },
-    "env": {
-      "browser": true,
-      "mocha": true,
-      "jest": false,
-      "es6": true
-    },
-    "globals": {
-      "expect": true
-    },
-    "rules": {
-      "semi": [
-        2,
-        "always"
-      ],
-      "jest/valid-expect": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/explicit-function-return-type": 0,
-      "@typescript-eslint/explicit-module-boundary-types": 0,
-      "@typescript-eslint/no-empty-function": 0,
-      "@typescript-eslint/no-non-null-assertion": 0
-    }
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none"
   },
-  "eslintIgnore": [
-    "dist",
-    "index.d.ts"
-  ],
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "@types/sinon": "^9.0.4",
     "@types/sinon-chai": "^3.2.4",
-    "@typescript-eslint/eslint-plugin": "^3.0.1",
-    "@typescript-eslint/parser": "^3.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
     "chai": "^4.2.0",
-    "documentation": "^13.0.0",
-    "eslint": "^7.1.0",
+    "documentation": "^14.0.2",
+    "eslint": "^7.32.0",
     "eslint-config-developit": "^1.2.0",
+    "eslint-plugin-compat": "^4.1.4",
     "esm": "^3.2.25",
     "microbundle": "^0.12.3",
     "mocha": "^8.0.1",
     "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.8",
     "rimraf": "^3.0.2",
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.7"
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
   }
 }
