@@ -10,6 +10,7 @@
   "typings": "index.d.ts",
   "exports": {
     "types": "./index.d.ts",
+    "module": "./dist/mitt.mjs",
     "import": "./dist/mitt.mjs",
     "require": "./dist/mitt.js",
     "default": "./dist/mitt.mjs"
@@ -57,7 +58,7 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "none"
-    },
+  },
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
@@ -79,6 +80,6 @@
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.5"
+    "typescript": "^4.9.5"
   }
 }
