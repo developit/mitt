@@ -44,17 +44,13 @@ describe('mitt#', () => {
 
 	describe('properties', () => {
 		it('should expose the event handler map', () => {
-			expect(inst)
-				.to.have.property('all')
-				.that.is.a('map');
+			expect(inst).to.have.property('all').that.is.a('map');
 		});
 	});
 
 	describe('on()', () => {
 		it('should be a function', () => {
-			expect(inst)
-				.to.have.property('on')
-				.that.is.a('function');
+			expect(inst).to.have.property('on').that.is.a('function');
 		});
 
 		it('should register handler for new type', () => {
@@ -111,9 +107,7 @@ describe('mitt#', () => {
 
 	describe('off()', () => {
 		it('should be a function', () => {
-			expect(inst)
-				.to.have.property('off')
-				.that.is.a('function');
+			expect(inst).to.have.property('off').that.is.a('function');
 		});
 
 		it('should remove handler for type', () => {
@@ -165,9 +159,7 @@ describe('mitt#', () => {
 
 	describe('emit()', () => {
 		it('should be a function', () => {
-			expect(inst)
-				.to.have.property('emit')
-				.that.is.a('function');
+			expect(inst).to.have.property('emit').that.is.a('function');
 		});
 
 		it('should invoke handler for type', () => {
