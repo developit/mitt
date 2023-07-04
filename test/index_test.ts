@@ -200,5 +200,13 @@ describe('mitt#', () => {
 			inst.emit('bar', eb);
 			expect(star).to.have.been.calledOnce.and.calledWith('bar', eb);
 		});
+
+		it('spreaded arguments', () => {
+			const Func = spy();
+			events.set('Func', [Func]);
+
+			inst.emit('Func', ...[1,2,3]);
+			expect(Func).to.have.been.called.and.calledWith(1,2,3);
+		});
 	});
 });
