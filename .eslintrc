@@ -1,0 +1,52 @@
+{
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    "index.d.ts"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "developit"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "jest": false,
+    "es6": true
+  },
+  "globals": {
+    "expect": true
+  },
+  "rules": {
+    "semi": [
+      2,
+      "always"
+    ],
+    "brace-style": [
+      2,
+      "1tbs"
+    ],
+    "quotes": [
+      2,
+      "single"
+    ],
+    "lines-around-comment": [
+      2,
+      {
+        "allowBlockStart": true,
+        "allowObjectStart": true
+      }
+    ],
+    "jest/valid-expect": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/no-empty-function": 0,
+    "@typescript-eslint/no-non-null-assertion": 0
+  }
+}
