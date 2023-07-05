@@ -85,7 +85,7 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 				if (handler) {
 					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
 				} else {
-					all!.set(type, []);
+					all!.delete(type);
 				}
 			}
 		},

@@ -150,10 +150,10 @@ describe('mitt#', () => {
 			inst.on('foo', () => {});
 			inst.on('bar', () => {});
 			inst.off('foo');
-			expect(events.get('foo')).to.deep.equal([]);
+			expect(events.get('foo')).to.deep.equal(undefined);
 			expect(events.get('bar')).to.have.length(1);
 			inst.off('bar');
-			expect(events.get('bar')).to.deep.equal([]);
+			expect(events.get('bar')).to.deep.equal(undefined);
 		});
 	});
 
