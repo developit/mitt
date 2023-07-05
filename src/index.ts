@@ -49,7 +49,7 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 	type GenericEventHandler =
 		| Handler<Events[keyof Events]>
 		| WildcardHandler<Events>;
-	all = all || new Map();
+	all = all instanceof Map ? all : new Map();
 
 	return {
 		/**
