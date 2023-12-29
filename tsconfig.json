@@ -1,6 +1,7 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
+		"target": "ES2015",
 		"strict": true,
 		"noEmit": true,
 		"declaration": true,
