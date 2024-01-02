@@ -10,22 +10,22 @@
 
 > Tiny 200b functional event emitter / pubsub.
 
--   **Microscopic:** weighs less than 200 bytes gzipped
--   **Useful:** a wildcard `"*"` event type listens to all events
--   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
--   **Functional:** methods don't rely on `this`
--   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
+*   **Microscopic:** weighs less than 200 bytes gzipped
+*   **Useful:** a wildcard `"*"` event type listens to all events
+*   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+*   **Functional:** methods don't rely on `this`
+*   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
 
 Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
 
 ## Table of Contents
 
--   [Install](#install)
--   [Usage](#usage)
--   [Examples & Demos](#examples--demos)
--   [API](#api)
--   [Contribute](#contribute)
--   [License](#license)
+*   [Install](#install)
+*   [Usage](#usage)
+*   [Examples & Demos](#examples--demos)
+*   [API](#api)
+*   [Contribute](#contribute)
+*   [License](#license)
 
 ## Install
 
@@ -118,7 +118,7 @@ const emitter: Emitter<Events> = mitt<Events>();
   <img src="https://i.imgur.com/CjBgOfJ.png" width="278" alt="preact + mitt preview">
 </a>
 
-* * *
+***
 
 ## API
 
@@ -126,20 +126,20 @@ const emitter: Emitter<Events> = mitt<Events>();
 
 #### Table of Contents
 
--   [mitt](#mitt)
--   [all](#all)
--   [on](#on)
-    -   [Parameters](#parameters)
--   [off](#off)
-    -   [Parameters](#parameters-1)
--   [emit](#emit)
-    -   [Parameters](#parameters-2)
+*   [mitt](#mitt)
+*   [all](#all)
+*   [on](#on)
+    *   [Parameters](#parameters)
+*   [off](#off)
+    *   [Parameters](#parameters-1)
+*   [emit](#emit)
+    *   [Parameters](#parameters-2)
 
 ### mitt
 
 Mitt: Tiny (~200b) functional event emitter / pubsub.
 
-Returns **Mitt** 
+Returns **Mitt**&#x20;
 
 ### all
 
@@ -151,8 +151,8 @@ Register an event handler for the given type.
 
 #### Parameters
 
--   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to listen for, or `'*'` for all events
--   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function to call in response to given event
+*   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to listen for, or `'*'` for all events
+*   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function to call in response to given event
 
 ### off
 
@@ -161,8 +161,8 @@ If `handler` is omitted, all handlers of the given type are removed.
 
 #### Parameters
 
--   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to unregister `handler` from, or `'*'`
--   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Handler function to remove
+*   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to unregister `handler` from (`'*'` to remove a wildcard handler)
+*   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Handler function to remove
 
 ### emit
 
@@ -173,8 +173,8 @@ Note: Manually firing '\*' handlers is not supported.
 
 #### Parameters
 
--   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** The event type to invoke
--   `evt` **Any?** Any value (object is recommended and powerful), passed to each handler
+*   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** The event type to invoke
+*   `evt` **Any?** Any value (object is recommended and powerful), passed to each handler
 
 ## Contribute
 
@@ -190,15 +190,15 @@ If don't, just open a [new clear and descriptive issue](../../issues/new).
 
 Pull requests are the greatest contributions, so be sure they are focused in scope, and do avoid unrelated commits.
 
--   Fork it!
--   Clone your fork: `git clone https://github.com/<your-username>/mitt`
--   Navigate to the newly cloned directory: `cd mitt`
--   Create a new branch for the new feature: `git checkout -b my-new-feature`
--   Install the tools necessary for development: `npm install`
--   Make your changes.
--   Commit your changes: `git commit -am 'Add some feature'`
--   Push to the branch: `git push origin my-new-feature`
--   Submit a pull request with full remarks documenting your changes.
+*   Fork it!
+*   Clone your fork: `git clone https://github.com/<your-username>/mitt`
+*   Navigate to the newly cloned directory: `cd mitt`
+*   Create a new branch for the new feature: `git checkout -b my-new-feature`
+*   Install the tools necessary for development: `npm install`
+*   Make your changes.
+*   Commit your changes: `git commit -am 'Add some feature'`
+*   Push to the branch: `git push origin my-new-feature`
+*   Submit a pull request with full remarks documenting your changes.
 
 ## License
 

@@ -1,19 +1,23 @@
 {
-  "name": "mitt",
-  "version": "3.0.1",
+  "name": "@liammartens/mitt",
+  "version": "3.0.1-beta.3",
   "description": "Tiny 200b functional Event Emitter / pubsub.",
-  "module": "dist/mitt.mjs",
-  "main": "dist/mitt.js",
-  "jsnext:main": "dist/mitt.mjs",
-  "umd:main": "dist/mitt.umd.js",
   "source": "src/index.ts",
-  "typings": "index.d.ts",
+  "module": "dist/esm/mitt.mjs",
+  "main": "dist/cjs/mitt.js",
+  "umd:main": "dist/mitt.umd.js",
+  "types": "dist/esm/index.d.ts",
   "exports": {
-    "types": "./index.d.ts",
-    "module": "./dist/mitt.mjs",
-    "import": "./dist/mitt.mjs",
-    "require": "./dist/mitt.js",
-    "default": "./dist/mitt.mjs"
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/mitt.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/mitt.js"
+      }
+    }
   },
   "scripts": {
     "test": "npm-run-all --silent typecheck lint mocha test-types",
@@ -21,8 +25,10 @@
     "test-types": "tsc test/test-types-compilation.ts --noEmit --strict",
     "lint": "eslint src test --ext ts --ext js",
     "typecheck": "tsc --noEmit",
-    "bundle": "microbundle -f es,cjs,umd",
-    "build": "npm-run-all --silent clean -p bundle -s docs",
+    "bundle:cjs": "tsup --config ./tsup.config.cjs.ts",
+    "bundle:esm": "tsup --config ./tsup.config.esm.ts",
+    "bundle:umd": "tsup --config ./tsup.config.umd.ts",
+    "build": "npm-run-all --silent clean -p bundle:* -s docs && tsconfig-to-dual-package ./tsconfig.cjs.json ./tsconfig.esm.json",
     "clean": "rimraf dist",
     "docs": "documentation readme src/index.ts --section API -q --parse-extension ts",
     "release": "npm run -s build -s && npm t && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
@@ -40,8 +46,7 @@
   ],
   "license": "MIT",
   "files": [
-    "dist",
-    "index.d.ts"
+    "dist"
   ],
   "mocha": {
     "extension": [
@@ -80,6 +85,8 @@
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.5"
+    "tsconfig-to-dual-package": "^1.2.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.0.0"
   }
 }
