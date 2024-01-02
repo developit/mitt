@@ -1,6 +1,6 @@
 {
-  "name": "@liammartens/mitt",
-  "version": "3.0.1-beta.3",
+  "name": "mitt",
+  "version": "3.0.1",
   "description": "Tiny 200b functional Event Emitter / pubsub.",
   "source": "src/index.ts",
   "module": "dist/esm/mitt.mjs",
