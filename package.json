@@ -6,15 +6,15 @@
   "module": "dist/esm/mitt.mjs",
   "main": "dist/cjs/mitt.js",
   "umd:main": "dist/mitt.umd.js",
-  "types": "dist/esm/index.d.ts",
+  "types": "dist/esm/mitt.d.ts",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/esm/index.d.ts",
+        "types": "./dist/esm/mitt.d.ts",
         "default": "./dist/esm/mitt.mjs"
       },
       "require": {
-        "types": "./dist/cjs/index.d.ts",
+        "types": "./dist/cjs/mitt.d.ts",
         "default": "./dist/cjs/mitt.js"
       }
     }
