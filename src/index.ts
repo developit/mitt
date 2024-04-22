@@ -51,7 +51,7 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		| WildcardHandler<Events>;
 	all = all || new Map();
 
-	return {
+	const instance = {
 		/**
 		 * A Map of event names to registered handler functions.
 		 */
@@ -70,6 +70,9 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 			} else {
 				all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>);
 			}
+			return () => {
+				instance.off(type, handler);
+			};
 		},
 
 		/**
@@ -120,4 +123,5 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 			}
 		}
 	};
+	return instance;
 }
