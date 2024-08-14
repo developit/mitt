@@ -23,17 +23,27 @@ export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
 export interface Emitter<Events extends Record<EventType, unknown>> {
 	all: EventHandlerMap<Events>;
 
-	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
-	on(type: '*', handler: WildcardHandler<Events>): void;
+	on<Key extends keyof Events>(
+		this: void,
+		type: Key,
+		handler: Handler<Events[Key]>
+	): void;
+	on(this: void, type: '*', handler: WildcardHandler<Events>): void;
 
 	off<Key extends keyof Events>(
+		this: void,
 		type: Key,
 		handler?: Handler<Events[Key]>
 	): void;
-	off(type: '*', handler: WildcardHandler<Events>): void;
+	off(this: void, type: '*', handler: WildcardHandler<Events>): void;
 
-	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
 	emit<Key extends keyof Events>(
+		this: void,
+		type: Key,
+		event: Events[Key]
+	): void;
+	emit<Key extends keyof Events>(
+		this: void,
 		type: undefined extends Events[Key] ? Key : never
 	): void;
 }
@@ -63,7 +73,11 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		 * @param {Function} handler Function to call in response to given event
 		 * @memberOf mitt
 		 */
-		on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
+		on<Key extends keyof Events>(
+			this: void,
+			type: Key,
+			handler: GenericEventHandler
+		) {
 			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
 			if (handlers) {
 				handlers.push(handler);
@@ -79,7 +93,11 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		 * @param {Function} [handler] Handler function to remove
 		 * @memberOf mitt
 		 */
-		off<Key extends keyof Events>(type: Key, handler?: GenericEventHandler) {
+		off<Key extends keyof Events>(
+			this: void,
+			type: Key,
+			handler?: GenericEventHandler
+		) {
 			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
 			if (handlers) {
 				if (handler) {
@@ -100,7 +118,7 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		 * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
 		 * @memberOf mitt
 		 */
-		emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
+		emit<Key extends keyof Events>(this: void, type: Key, evt?: Events[Key]) {
 			let handlers = all!.get(type);
 			if (handlers) {
 				(handlers as EventHandlerList<Events[keyof Events]>)
