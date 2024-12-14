@@ -20,11 +20,23 @@ export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
 	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
 >;
 
+export type SubscribeParams = {
+	signal: AbortSignal
+}
+
 export interface Emitter<Events extends Record<EventType, unknown>> {
 	all: EventHandlerMap<Events>;
 
-	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
-	on(type: '*', handler: WildcardHandler<Events>): void;
+	on<Key extends keyof Events>(
+		type: Key,
+		handler: Handler<Events[Key]>,
+		params?: Partial<SubscribeParams>
+	): void;
+	on(
+		type: '*',
+		handler: WildcardHandler<Events>,
+		params?: Partial<SubscribeParams>
+	): void;
 
 	off<Key extends keyof Events>(
 		type: Key,
@@ -63,13 +75,25 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		 * @param {Function} handler Function to call in response to given event
 		 * @memberOf mitt
 		 */
-		on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
+		on<Key extends keyof Events>(
+			type: Key,
+			handler: GenericEventHandler,
+			params?: Partial<SubscribeParams>,
+		) {
+			if (params?.signal?.aborted) {
+				return;
+			}
+			
 			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
 			if (handlers) {
 				handlers.push(handler);
 			} else {
 				all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>);
 			}
+
+			params?.signal?.addEventListener('abort', () => {
+				this.off<Key>(type, handler as Handler<Events[keyof Events]>);
+			});
 		},
 
 		/**

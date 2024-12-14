@@ -103,6 +103,43 @@ describe('mitt#', () => {
 			inst.on('foo', foo);
 			expect(events.get('foo')).to.deep.equal([foo, foo]);
 		});
+
+		it('should unsubscribe when signal aborted', () => {
+			const foo = spy();
+			const abortController = new AbortController();
+
+			inst.on(
+				'foo',
+				foo,
+				{ signal: abortController.signal }
+			);
+			inst.emit('foo');
+
+			abortController.abort();
+
+			inst.emit('foo');
+
+			expect(foo).to.have.been.callCount(1);
+		});
+
+		it('should make multiple unsubscribe when aborted', () => {
+			const foo = spy();
+			const bar = spy();
+			const abortController = new AbortController();
+
+			inst.on('foo', foo, { signal: abortController.signal });
+			inst.on('bar', bar, { signal: abortController.signal });
+			inst.emit('foo');
+			inst.emit('bar');
+
+			abortController.abort();
+
+			inst.emit('foo');
+			inst.emit('bar');
+
+			expect(foo).to.have.been.callCount(1);
+			expect(bar).to.have.been.callCount(1);
+		});
 	});
 
 	describe('off()', () => {
