@@ -8,12 +8,16 @@
   "umd:main": "dist/mitt.umd.js",
   "source": "src/index.ts",
   "typings": "index.d.ts",
+  "type": "module",
   "exports": {
-    "types": "./index.d.ts",
-    "module": "./dist/mitt.mjs",
-    "import": "./dist/mitt.mjs",
-    "require": "./dist/mitt.js",
-    "default": "./dist/mitt.mjs"
+    "import": {
+      "types": "./index.d.ts",
+      "default": "./dist/mitt.mjs"
+    },
+    "require": {
+      "types": "./index.d.ts",
+      "default": "./dist/mitt.js"
+    }
   },
   "scripts": {
     "test": "npm-run-all --silent typecheck lint mocha test-types",
