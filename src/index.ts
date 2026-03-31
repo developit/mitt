@@ -51,7 +51,7 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		| WildcardHandler<Events>;
 	all = all || new Map();
 
-	return {
+	const mittInstance = {
 		/**
 		 * A Map of event names to registered handler functions.
 		 */
@@ -59,8 +59,10 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 
 		/**
 		 * Register an event handler for the given type.
+		 * Returns a deregistration function.
 		 * @param {string|symbol} type Type of event to listen for, or `'*'` for all events
 		 * @param {Function} handler Function to call in response to given event
+         * @returns {Function}
 		 * @memberOf mitt
 		 */
 		on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
@@ -70,6 +72,9 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 			} else {
 				all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>);
 			}
+			return () => {
+				mittInstance.off(type, handler);
+			};
 		},
 
 		/**
@@ -120,4 +125,6 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 			}
 		}
 	};
+
+	return mittInstance;
 }
