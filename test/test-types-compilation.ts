@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment, @typescript-eslint/no-unused-vars */
 
-import mitt from '..';
+import mitt, { Emitter } from '..';
 
 interface SomeEventData {
 	name: string;
@@ -75,4 +75,36 @@ const wildcardHandler = (
 	emitter.emit('bar', 1);
 	// @ts-expect-error
 	emitter.emit('bar', 'string');
+}
+
+/*
+ * Check that interface- and alias-declared event maps are accepted
+ * https://github.com/developit/mitt/issues/209
+ */
+{
+	interface InterfaceEvents {
+		foo: string;
+		bar?: number;
+	}
+
+	type AliasEvents = {
+		foo: string;
+		bar?: number;
+	};
+
+	const fromInterface: Emitter<InterfaceEvents> = mitt<InterfaceEvents>();
+	const fromAlias = mitt<AliasEvents>();
+
+	fromInterface.on('foo', fooHandler);
+	fromInterface.on('bar', barHandler);
+	// @ts-expect-error
+	fromInterface.emit('someEvent', { name: 'jack' });
+	// @ts-expect-error
+	fromInterface.emit('foo', 42);
+
+	fromAlias.on('foo', (e) => {
+		const check: string = e;
+	});
+	// @ts-expect-error
+	fromAlias.emit('foo');
 }

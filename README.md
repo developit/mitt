@@ -110,6 +110,8 @@ type Events = {
 const emitter: Emitter<Events> = mitt<Events>();
 ```
 
+Event maps can be declared either as `type` aliases or as `interface` declarations — both typecheck under strict mode.
+
 ## Examples & Demos
 
 <a href="http://codepen.io/developit/pen/rjMEwW?editors=0110">
