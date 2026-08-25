@@ -15,12 +15,15 @@ export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
 >;
 
 // A map of event types and their corresponding event handlers.
-export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
+// The constraint is deliberately wider than `Record<EventType, unknown>`:
+// interfaces and object literals do not have an implicit index signature,
+// so a `Record`-based constraint rejects them under `strict` mode (issue #209).
+export type EventHandlerMap<Events extends object> = Map<
 	keyof Events | '*',
 	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
 >;
 
-export interface Emitter<Events extends Record<EventType, unknown>> {
+export interface Emitter<Events extends object> {
 	all: EventHandlerMap<Events>;
 
 	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
@@ -43,7 +46,7 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
  * @name mitt
  * @returns {Mitt}
  */
-export default function mitt<Events extends Record<EventType, unknown>>(
+export default function mitt<Events extends object>(
 	all?: EventHandlerMap<Events>
 ): Emitter<Events> {
 	type GenericEventHandler =

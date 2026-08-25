@@ -6,6 +6,30 @@ interface SomeEventData {
 	name: string;
 }
 
+/*
+ * Issue #209: interfaces (and object literals without an implicit index
+ * signature) must satisfy the generic constraint under `strict` mode.
+ */
+interface InterfaceEvents {
+	foo: string;
+	bar?: number;
+}
+
+type TypeLiteralEvents = {
+	foo: string;
+	bar?: number;
+};
+
+const interfaceEmitter = mitt<InterfaceEvents>();
+const typeLiteralEmitter = mitt<TypeLiteralEvents>();
+
+interfaceEmitter.on('foo', (e) => {
+	const _check: string = e;
+});
+typeLiteralEmitter.on('foo', (e) => {
+	const _check: string = e;
+});
+
 const emitter = mitt<{
 	foo: string;
 	someEvent: SomeEventData;
