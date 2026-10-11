@@ -157,6 +157,21 @@ describe('mitt#', () => {
 		});
 	});
 
+	it('off("*") should remove all wildcard handlers only', () => {
+		const wildcard = spy();
+		const foo = spy();
+		inst.on('*', wildcard);
+		inst.on('*', spy());
+		inst.on('foo', foo);
+
+		inst.off('*');
+		inst.emit('foo', 'value');
+
+		expect(events.get('*')).to.deep.equal([]);
+		expect(wildcard).not.to.have.been.called;
+		expect(foo).to.have.been.calledOnce.and.calledWith('value');
+	});
+
 	describe('emit()', () => {
 		it('should be a function', () => {
 			expect(inst).to.have.property('emit').that.is.a('function');
