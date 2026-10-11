@@ -30,7 +30,7 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
 		type: Key,
 		handler?: Handler<Events[Key]>
 	): void;
-	off(type: '*', handler: WildcardHandler<Events>): void;
+	off(type: '*', handler?: WildcardHandler<Events>): void;
 
 	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
 	emit<Key extends keyof Events>(

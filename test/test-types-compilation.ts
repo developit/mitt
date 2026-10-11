@@ -50,6 +50,8 @@ const wildcardHandler = (
 	// @ts-expect-error
 	emitter.off('bar', fooHandler);
 
+	emitter.off('*');
+	emitter.off('*', undefined);
 	emitter.off('*', wildcardHandler);
 	// fooHandler is ok, because ('foo' | 'bar' | 'someEvent') extends string
 	emitter.off('*', fooHandler);
