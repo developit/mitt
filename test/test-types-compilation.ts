@@ -76,3 +76,18 @@ const wildcardHandler = (
 	// @ts-expect-error
 	emitter.emit('bar', 'string');
 }
+
+// Interfaces should work as event maps too.
+interface InterfaceEvents {
+	foo: string;
+	bar?: number;
+}
+const interfaceEmitter = mitt<InterfaceEvents>();
+interfaceEmitter.emit('foo', 'value');
+interfaceEmitter.emit('bar');
+// @ts-expect-error
+interfaceEmitter.emit('foo', 1);
+// @ts-expect-error
+interfaceEmitter.emit('missing', 1);
+// @ts-expect-error
+mitt<{ 42: string }>();
