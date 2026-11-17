@@ -97,6 +97,8 @@ emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
 emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
 ```
 
+Event maps can be declared with either `type` or `interface`.
+
 Alternatively, you can use the provided `Emitter` type:
 
 ```ts

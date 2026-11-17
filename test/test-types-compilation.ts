@@ -20,6 +20,23 @@ const wildcardHandler = (
 ) => {};
 
 /*
+ * Check that event maps declared as interfaces work too (#209).
+ * Interfaces have no implicit index signature, so they did not satisfy
+ * the old `Record<EventType, unknown>` constraint.
+ */
+interface InterfaceEvents {
+	foo: string;
+	bar?: number;
+}
+
+const interfaceEmitter = mitt<InterfaceEvents>();
+interfaceEmitter.on('foo', fooHandler);
+interfaceEmitter.emit('foo', 'string');
+interfaceEmitter.emit('bar', 1);
+// @ts-expect-error
+interfaceEmitter.emit('foo', 1);
+
+/*
  * Check that 'on' args are inferred correctly
  */
 {
