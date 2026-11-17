@@ -157,6 +157,78 @@ describe('mitt#', () => {
 		});
 	});
 
+	describe('once()', () => {
+		it('should be a function', () => {
+			expect(inst).to.have.property('once').that.is.a('function');
+		});
+
+		it('should invoke handler only once', () => {
+			const foo = spy();
+			inst.once('foo', foo);
+			inst.emit('foo');
+			inst.emit('foo');
+			expect(foo).to.have.been.calledOnce;
+		});
+
+		it('should pass the event to the handler', () => {
+			const event = { a: 'b' };
+			const foo = spy();
+			inst.once('foo', foo);
+			inst.emit('foo', event);
+			expect(foo).to.have.been.calledOnce.and.calledWith(event);
+		});
+
+		it('should invoke * handlers only once', () => {
+			const star = spy();
+			inst.once('*', star);
+			inst.emit('foo', 'a');
+			inst.emit('bar', 'b');
+			expect(star).to.have.been.calledOnce.and.calledWith('foo', 'a');
+		});
+
+		it('should allow removing a once handler with off() before it fires', () => {
+			const foo = spy();
+			inst.once('foo', foo);
+			inst.off('foo', foo);
+			inst.emit('foo');
+			expect(foo).to.not.have.been.called;
+		});
+
+		it('should remove the once handler even if it throws', () => {
+			const foo = spy(() => {
+				throw new Error('boom');
+			});
+			inst.once('foo', foo);
+			expect(() => inst.emit('foo')).to.throw('boom');
+			inst.emit('foo');
+			expect(foo).to.have.been.calledOnce;
+		});
+
+		it('should remove the first matching listener when combined with on()', () => {
+			// `on` first, then `once`: off() removes the `on` registration,
+			// so the `once` handler still fires exactly once.
+			const foo = spy();
+			inst.on('foo', foo);
+			inst.once('foo', foo);
+			inst.off('foo', foo);
+			inst.emit('foo');
+			inst.emit('foo');
+			expect(foo).to.have.been.calledOnce;
+		});
+
+		it('should remove the once handler first when it was registered first', () => {
+			// `once` first, then `on`: off() removes the `once` handler,
+			// so the `on` registration keeps firing.
+			const foo = spy();
+			inst.once('foo', foo);
+			inst.on('foo', foo);
+			inst.off('foo', foo);
+			inst.emit('foo');
+			inst.emit('foo');
+			expect(foo).to.have.been.calledTwice;
+		});
+	});
+
 	describe('emit()', () => {
 		it('should be a function', () => {
 			expect(inst).to.have.property('emit').that.is.a('function');

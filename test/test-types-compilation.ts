@@ -39,6 +39,25 @@ const wildcardHandler = (
 }
 
 /*
+ * Check that 'once' args are inferred correctly
+ */
+{
+	// @ts-expect-error
+	emitter.once('foo', barHandler);
+	emitter.once('foo', fooHandler);
+
+	emitter.once('bar', barHandler);
+	// @ts-expect-error
+	emitter.once('bar', fooHandler);
+
+	emitter.once('*', wildcardHandler);
+	// fooHandler is ok, because ('foo' | 'bar' | 'someEvent') extends string
+	emitter.once('*', fooHandler);
+	// @ts-expect-error
+	emitter.once('*', barHandler);
+}
+
+/*
  * Check that 'off' args are inferred correctly
  */
 {
