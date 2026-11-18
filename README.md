@@ -130,10 +130,12 @@ const emitter: Emitter<Events> = mitt<Events>();
 -   [all](#all)
 -   [on](#on)
     -   [Parameters](#parameters)
--   [off](#off)
+-   [once](#once)
     -   [Parameters](#parameters-1)
--   [emit](#emit)
+-   [off](#off)
     -   [Parameters](#parameters-2)
+-   [emit](#emit)
+    -   [Parameters](#parameters-3)
 
 ### mitt
 
@@ -148,6 +150,17 @@ A Map of event names to registered handler functions.
 ### on
 
 Register an event handler for the given type.
+
+#### Parameters
+
+-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to listen for, or `'*'` for all events
+-   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function to call in response to given event
+
+### once
+
+Register an event handler for the given type that is invoked at most once.
+The handler is removed after its first invocation, and can also be
+removed beforehand with `off(type, handler)`.
 
 #### Parameters
 

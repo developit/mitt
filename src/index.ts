@@ -26,6 +26,12 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
 	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
 	on(type: '*', handler: WildcardHandler<Events>): void;
 
+	once<Key extends keyof Events>(
+		type: Key,
+		handler: Handler<Events[Key]>
+	): void;
+	once(type: '*', handler: WildcardHandler<Events>): void;
+
 	off<Key extends keyof Events>(
 		type: Key,
 		handler?: Handler<Events[Key]>
@@ -38,6 +44,9 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
 	): void;
 }
 
+const onceHandlerKey = '__mittOnce';
+const onceHandlerMarker = {};
+
 /**
  * Mitt: Tiny (~200b) functional event emitter / pubsub.
  * @name mitt
@@ -49,6 +58,10 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 	type GenericEventHandler =
 		| Handler<Events[keyof Events]>
 		| WildcardHandler<Events>;
+	type OnceHandlerMetadata = {
+		marker: typeof onceHandlerMarker;
+		handler: GenericEventHandler;
+	};
 	all = all || new Map();
 
 	return {
@@ -73,6 +86,44 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		},
 
 		/**
+		 * Register an event handler for the given type that is invoked at most once.
+		 * The handler is removed after its first invocation, and can also be
+		 * removed beforehand with `off(type, handler)`.
+		 * @param {string|symbol} type Type of event to listen for, or `'*'` for all events
+		 * @param {Function} handler Function to call in response to given event
+		 * @memberOf mitt
+		 */
+		once<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
+			let fired = false;
+			const wrapper = ((...args: Array<unknown>) => {
+				// emit() invokes handlers from a snapshot, so when an
+				// earlier listener re-emits synchronously the nested emit
+				// would invoke this wrapper and the outer emit would invoke
+				// it again. Guard on `fired` so it runs at most once.
+				if (fired) {
+					return;
+				}
+				fired = true;
+				const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
+				if (handlers) {
+					handlers.splice(handlers.indexOf(wrapper) >>> 0, 1);
+				}
+				(handler as (...args: Array<unknown>) => void)(...args);
+			}) as GenericEventHandler;
+			// Store the handler on its wrapper so emitters sharing a map
+			// can identify it without requiring WeakMap.
+			Object.defineProperty(wrapper, onceHandlerKey, {
+				value: { marker: onceHandlerMarker, handler }
+			});
+			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
+			if (handlers) {
+				handlers.push(wrapper);
+			} else {
+				all!.set(type, [wrapper] as EventHandlerList<Events[keyof Events]>);
+			}
+		},
+
+		/**
 		 * Remove an event handler for the given type.
 		 * If `handler` is omitted, all handlers of the given type are removed.
 		 * @param {string|symbol} type Type of event to unregister `handler` from (`'*'` to remove a wildcard handler)
@@ -83,7 +134,35 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
 			if (handlers) {
 				if (handler) {
-					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
+					// A handler registered via `once()` is stored as a wrapper,
+					// so match it through the original handler. Like Node's
+					// `removeListener`, the first matching listener is removed.
+					// A plain loop (no Array.prototype.findIndex) keeps this
+					// working on IE11, within the README's advertised IE9+
+					// support.
+					let index = -1;
+					for (let i = 0; i < handlers.length; i++) {
+						const listener = handlers[i];
+						if (listener !== handler) {
+							const descriptor: PropertyDescriptor | undefined =
+								typeof listener === 'function'
+									? Object.getOwnPropertyDescriptor(listener, onceHandlerKey)
+									: undefined;
+							const metadata: OnceHandlerMetadata | undefined = descriptor
+								? descriptor.value
+								: undefined;
+							if (
+								!metadata ||
+								metadata.marker !== onceHandlerMarker ||
+								metadata.handler !== handler
+							) {
+								continue;
+							}
+						}
+						index = i;
+						break;
+					}
+					handlers.splice(index >>> 0, 1);
 				} else {
 					all!.set(type, []);
 				}

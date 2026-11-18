@@ -1,7 +1,9 @@
 import mitt, { Emitter, EventHandlerMap } from '..';
 import chai, { expect } from 'chai';
+import { readFileSync } from 'fs';
 import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
+import { runInNewContext } from 'vm';
 chai.use(sinonChai);
 
 describe('mitt', () => {
@@ -19,6 +21,29 @@ describe('mitt', () => {
 		events.emit('foo');
 		expect(a).to.have.been.calledOnce;
 		expect(b).to.have.been.calledOnce;
+	});
+
+	it('should work with Map available but no WeakMap', () => {
+		const source = readFileSync(require.resolve('..'), 'utf8');
+		const loadMitt = runInNewContext(source + '\nmodule.exports;', {
+			Map,
+			WeakMap: undefined,
+			module: { exports: {} }
+		}) as typeof mitt;
+		const emitter = loadMitt<{ foo: undefined }>();
+		const other = loadMitt(emitter.all);
+		const listener = spy();
+		const cancelled = spy();
+
+		emitter.on('foo', listener);
+		emitter.once('foo', cancelled);
+		other.off('foo', cancelled);
+		other.emit('foo');
+		other.off('foo', listener);
+		other.emit('foo');
+
+		expect(listener).to.have.been.calledOnce;
+		expect(cancelled).to.not.have.been.called;
 	});
 });
 
@@ -154,6 +179,138 @@ describe('mitt#', () => {
 			expect(events.get('bar')).to.have.length(1);
 			inst.off('bar');
 			expect(events.get('bar')).to.deep.equal([]);
+		});
+	});
+
+	describe('once()', () => {
+		it('should be a function', () => {
+			expect(inst).to.have.property('once').that.is.a('function');
+		});
+
+		it('should invoke handler only once', () => {
+			const foo = spy();
+			inst.once('foo', foo);
+			inst.emit('foo');
+			inst.emit('foo');
+			expect(foo).to.have.been.calledOnce;
+		});
+
+		it('should pass the event to the handler', () => {
+			const event = { a: 'b' };
+			const foo = spy();
+			inst.once('foo', foo);
+			inst.emit('foo', event);
+			expect(foo).to.have.been.calledOnce.and.calledWith(event);
+		});
+
+		it('should invoke * handlers only once', () => {
+			const star = spy();
+			inst.once('*', star);
+			inst.emit('foo', 'a');
+			inst.emit('bar', 'b');
+			expect(star).to.have.been.calledOnce.and.calledWith('foo', 'a');
+		});
+
+		it('should allow removing a once handler with off() before it fires', () => {
+			const foo = spy();
+			inst.once('foo', foo);
+			inst.off('foo', foo);
+			inst.emit('foo');
+			expect(foo).to.not.have.been.called;
+		});
+
+		it('should remove the once handler even if it throws', () => {
+			const foo = spy(() => {
+				throw new Error('boom');
+			});
+			inst.once('foo', foo);
+			expect(() => inst.emit('foo')).to.throw('boom');
+			inst.emit('foo');
+			expect(foo).to.have.been.calledOnce;
+		});
+
+		it('should remove the first matching listener when combined with on()', () => {
+			// `on` first, then `once`: off() removes the `on` registration,
+			// so the `once` handler still fires exactly once.
+			const foo = spy();
+			inst.on('foo', foo);
+			inst.once('foo', foo);
+			inst.off('foo', foo);
+			inst.emit('foo');
+			inst.emit('foo');
+			expect(foo).to.have.been.calledOnce;
+		});
+
+		it('should remove the once handler first when it was registered first', () => {
+			// `once` first, then `on`: off() removes the `once` handler,
+			// so the `on` registration keeps firing.
+			const foo = spy();
+			inst.once('foo', foo);
+			inst.on('foo', foo);
+			inst.off('foo', foo);
+			inst.emit('foo');
+			inst.emit('foo');
+			expect(foo).to.have.been.calledTwice;
+		});
+
+		it('should invoke handler only once when an earlier listener re-emits', () => {
+			// The outer emit() keeps a snapshot of the handlers, so without
+			// a fired guard the wrapper is invoked once by the nested emit
+			// and once more by the outer emit.
+			const foo = spy();
+			let reemitted = false;
+			inst.on('foo', () => {
+				if (!reemitted) {
+					reemitted = true;
+					inst.emit('foo');
+				}
+			});
+			inst.once('foo', foo);
+			inst.emit('foo');
+			expect(foo).to.have.been.calledOnce;
+		});
+
+		it('should invoke * handlers only once when an earlier listener re-emits', () => {
+			const star = spy();
+			let reemitted = false;
+			inst.on('*', () => {
+				if (!reemitted) {
+					reemitted = true;
+					inst.emit('foo', 'a');
+				}
+			});
+			inst.once('*', star);
+			inst.emit('foo', 'a');
+			expect(star).to.have.been.calledOnce.and.calledWith('foo', 'a');
+		});
+
+		it('should allow removing a once handler through an emitter sharing the map', () => {
+			// `mitt(existingMap)` shares the handler map, so off() must
+			// resolve the once() wrapper through shared metadata, not
+			// through state private to the registering emitter.
+			const foo = spy();
+			const other = mitt(events);
+			inst.once('foo', foo);
+			other.off('foo', foo);
+			inst.emit('foo');
+			expect(foo).to.not.have.been.called;
+		});
+
+		it('should remove handlers without Array.prototype.findIndex', () => {
+			// IE11 (within the README's advertised IE9+ support) has no
+			// Array.prototype.findIndex, so off() must not rely on it.
+			const foo = spy();
+			const findIndex = Array.prototype.findIndex;
+			// @ts-expect-error testing an environment without findIndex (IE11)
+			Array.prototype.findIndex = undefined;
+			try {
+				inst.on('foo', foo);
+				inst.off('foo', foo);
+				inst.emit('foo');
+			} finally {
+				Array.prototype.findIndex = findIndex;
+			}
+			expect(foo).to.not.have.been.called;
 		});
 	});
 
