@@ -44,13 +44,8 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
 	): void;
 }
 
-/**
- * Maps a `once()` wrapper back to the handler it was registered with,
- * so `off(type, handler)` can remove it like Node's `removeListener`.
- * It lives at module scope so emitters sharing one handler map
- * (`mitt(existingMap)`) can all resolve wrappers registered by any of them.
- */
-const onceHandlers = new WeakMap<object, object>();
+const onceHandlerKey = '__mittOnce';
+const onceHandlerMarker = {};
 
 /**
  * Mitt: Tiny (~200b) functional event emitter / pubsub.
@@ -63,6 +58,10 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 	type GenericEventHandler =
 		| Handler<Events[keyof Events]>
 		| WildcardHandler<Events>;
+	type OnceHandlerMetadata = {
+		marker: typeof onceHandlerMarker;
+		handler: GenericEventHandler;
+	};
 	all = all || new Map();
 
 	return {
@@ -111,7 +110,11 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 				}
 				(handler as (...args: Array<unknown>) => void)(...args);
 			}) as GenericEventHandler;
-			onceHandlers.set(wrapper, handler);
+			// Store the handler on its wrapper so emitters sharing a map
+			// can identify it without requiring WeakMap.
+			Object.defineProperty(wrapper, onceHandlerKey, {
+				value: { marker: onceHandlerMarker, handler }
+			});
 			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
 			if (handlers) {
 				handlers.push(wrapper);
@@ -139,13 +142,25 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 					// support.
 					let index = -1;
 					for (let i = 0; i < handlers.length; i++) {
-						if (
-							handlers[i] === handler ||
-							onceHandlers.get(handlers[i]) === handler
-						) {
-							index = i;
-							break;
+						const listener = handlers[i];
+						if (listener !== handler) {
+							const descriptor: PropertyDescriptor | undefined =
+								typeof listener === 'function'
+									? Object.getOwnPropertyDescriptor(listener, onceHandlerKey)
+									: undefined;
+							const metadata: OnceHandlerMetadata | undefined = descriptor
+								? descriptor.value
+								: undefined;
+							if (
+								!metadata ||
+								metadata.marker !== onceHandlerMarker ||
+								metadata.handler !== handler
+							) {
+								continue;
+							}
 						}
+						index = i;
+						break;
 					}
 					handlers.splice(index >>> 0, 1);
 				} else {

@@ -1,7 +1,9 @@
 import mitt, { Emitter, EventHandlerMap } from '..';
 import chai, { expect } from 'chai';
+import { readFileSync } from 'fs';
 import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
+import { runInNewContext } from 'vm';
 chai.use(sinonChai);
 
 describe('mitt', () => {
@@ -19,6 +21,29 @@ describe('mitt', () => {
 		events.emit('foo');
 		expect(a).to.have.been.calledOnce;
 		expect(b).to.have.been.calledOnce;
+	});
+
+	it('should work with Map available but no WeakMap', () => {
+		const source = readFileSync(require.resolve('..'), 'utf8');
+		const loadMitt = runInNewContext(source + '\nmodule.exports;', {
+			Map,
+			WeakMap: undefined,
+			module: { exports: {} }
+		}) as typeof mitt;
+		const emitter = loadMitt<{ foo: undefined }>();
+		const other = loadMitt(emitter.all);
+		const listener = spy();
+		const cancelled = spy();
+
+		emitter.on('foo', listener);
+		emitter.once('foo', cancelled);
+		other.off('foo', cancelled);
+		other.emit('foo');
+		other.off('foo', listener);
+		other.emit('foo');
+
+		expect(listener).to.have.been.calledOnce;
+		expect(cancelled).to.not.have.been.called;
 	});
 });
 
