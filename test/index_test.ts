@@ -227,6 +227,66 @@ describe('mitt#', () => {
 			inst.emit('foo');
 			expect(foo).to.have.been.calledTwice;
 		});
+
+		it('should invoke handler only once when an earlier listener re-emits', () => {
+			// The outer emit() keeps a snapshot of the handlers, so without
+			// a fired guard the wrapper is invoked once by the nested emit
+			// and once more by the outer emit.
+			const foo = spy();
+			let reemitted = false;
+			inst.on('foo', () => {
+				if (!reemitted) {
+					reemitted = true;
+					inst.emit('foo');
+				}
+			});
+			inst.once('foo', foo);
+			inst.emit('foo');
+			expect(foo).to.have.been.calledOnce;
+		});
+
+		it('should invoke * handlers only once when an earlier listener re-emits', () => {
+			const star = spy();
+			let reemitted = false;
+			inst.on('*', () => {
+				if (!reemitted) {
+					reemitted = true;
+					inst.emit('foo', 'a');
+				}
+			});
+			inst.once('*', star);
+			inst.emit('foo', 'a');
+			expect(star).to.have.been.calledOnce.and.calledWith('foo', 'a');
+		});
+
+		it('should allow removing a once handler through an emitter sharing the map', () => {
+			// `mitt(existingMap)` shares the handler map, so off() must
+			// resolve the once() wrapper through shared metadata, not
+			// through state private to the registering emitter.
+			const foo = spy();
+			const other = mitt(events);
+			inst.once('foo', foo);
+			other.off('foo', foo);
+			inst.emit('foo');
+			expect(foo).to.not.have.been.called;
+		});
+
+		it('should remove handlers without Array.prototype.findIndex', () => {
+			// IE11 (within the README's advertised IE9+ support) has no
+			// Array.prototype.findIndex, so off() must not rely on it.
+			const foo = spy();
+			const findIndex = Array.prototype.findIndex;
+			// @ts-expect-error testing an environment without findIndex (IE11)
+			Array.prototype.findIndex = undefined;
+			try {
+				inst.on('foo', foo);
+				inst.off('foo', foo);
+				inst.emit('foo');
+			} finally {
+				Array.prototype.findIndex = findIndex;
+			}
+			expect(foo).to.not.have.been.called;
+		});
 	});
 
 	describe('emit()', () => {

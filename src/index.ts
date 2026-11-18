@@ -45,6 +45,14 @@ export interface Emitter<Events extends Record<EventType, unknown>> {
 }
 
 /**
+ * Maps a `once()` wrapper back to the handler it was registered with,
+ * so `off(type, handler)` can remove it like Node's `removeListener`.
+ * It lives at module scope so emitters sharing one handler map
+ * (`mitt(existingMap)`) can all resolve wrappers registered by any of them.
+ */
+const onceHandlers = new WeakMap<object, object>();
+
+/**
  * Mitt: Tiny (~200b) functional event emitter / pubsub.
  * @name mitt
  * @returns {Mitt}
@@ -56,10 +64,6 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		| Handler<Events[keyof Events]>
 		| WildcardHandler<Events>;
 	all = all || new Map();
-
-	// Maps a `once()` wrapper back to the handler it was registered with,
-	// so `off(type, handler)` can remove it like Node's `removeListener`.
-	const onceHandlers = new WeakMap<GenericEventHandler, GenericEventHandler>();
 
 	return {
 		/**
@@ -91,7 +95,16 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 		 * @memberOf mitt
 		 */
 		once<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
+			let fired = false;
 			const wrapper = ((...args: Array<unknown>) => {
+				// emit() invokes handlers from a snapshot, so when an
+				// earlier listener re-emits synchronously the nested emit
+				// would invoke this wrapper and the outer emit would invoke
+				// it again. Guard on `fired` so it runs at most once.
+				if (fired) {
+					return;
+				}
+				fired = true;
 				const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
 				if (handlers) {
 					handlers.splice(handlers.indexOf(wrapper) >>> 0, 1);
@@ -121,9 +134,19 @@ export default function mitt<Events extends Record<EventType, unknown>>(
 					// A handler registered via `once()` is stored as a wrapper,
 					// so match it through the original handler. Like Node's
 					// `removeListener`, the first matching listener is removed.
-					const index = handlers.findIndex(
-						(h) => h === handler || onceHandlers.get(h) === handler
-					);
+					// A plain loop (no Array.prototype.findIndex) keeps this
+					// working on IE11, within the README's advertised IE9+
+					// support.
+					let index = -1;
+					for (let i = 0; i < handlers.length; i++) {
+						if (
+							handlers[i] === handler ||
+							onceHandlers.get(handlers[i]) === handler
+						) {
+							index = i;
+							break;
+						}
+					}
 					handlers.splice(index >>> 0, 1);
 				} else {
 					all!.set(type, []);
